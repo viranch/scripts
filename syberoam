@@ -1,0 +1,3 @@
+#!/bin/bash
+
+curl -Ss http://10.100.56.55:8090/httpclient.html -d "mode=191&username=200801035&password=archie007&btnSubmit=Login" > /dev/null
