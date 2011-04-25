@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl -Ss http://10.100.56.55:8090/httpclient.html -d "mode=191&username=200801035&password=archie007&btnSubmit=Login" > /dev/null
+curl -Ss http://10.100.56.55:8090/httpclient.html -d "mode=191&username=200801001&password=200801001" | grep -o "none\">.*</d" | cut -d">" -f2 | cut -d"<" -f1

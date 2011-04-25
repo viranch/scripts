@@ -50,7 +50,7 @@ if [ "$opt" = "2" ]; then
 elif [ "$opt" = "3" ]; then
 	pkg="xf86-video-ati"
 fi
-pacman -S alsa-utils libgl xorg mesa $pkg xf86-input-{keyboard,mouse,evdev,synaptics} dbus
+pacman -S pulseaudio libgl xorg mesa $pkg xf86-input-{keyboard,mouse,evdev,synaptics} dbus
 if [ "$opt" = "2" ]; then
 	nvidia-xconfig
 else
