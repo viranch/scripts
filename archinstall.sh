@@ -14,9 +14,11 @@ fi
 alias pacman='pacman --noconfirm --needed'
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 if [ $# -eq 1 ]; then
-	echo "Server = $1" >> /etc/pacman.d/mirrorlist
+	echo "Server = $1" > /etc/pacman.d/mirrorlist
+	echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+else
+	echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 fi
-echo "Server = ftp://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
 
 # Initially force pacman to refresh the package lists
 echo ":: Updating base system first"
@@ -34,8 +36,9 @@ read username
 useradd -m -g users -G audio,lp,optical,storage,video,wheel,games,power -s /bin/bash $username
 passwd $username
 pacman -S vim sudo
-EDITOR=vim
-sed 's/^root/$username/g' /etc/sudoers > /tmp/sudoers; mv /tmp/sudoers /etc/sudoers
+export EDITOR=vim
+sed "s/^root/$username/g" /etc/sudoers -i
+chmod 0440 /etc/sudoers
 echo ":: Configuring users complete."
 echo
 
@@ -50,7 +53,7 @@ if [ "$opt" = "2" ]; then
 elif [ "$opt" = "3" ]; then
 	pkg="xf86-video-ati"
 fi
-pacman -S pulseaudio libgl xorg mesa $pkg xf86-input-{keyboard,mouse,evdev,synaptics} dbus
+pacman -S pulseaudio libgl xorg-server mesa $pkg xf86-input-{keyboard,mouse,evdev,synaptics} dbus
 if [ "$opt" = "2" ]; then
 	nvidia-xconfig
 else
@@ -78,7 +81,7 @@ echo
 
 # Add to the DAEMONS array in /etc/rc.conf to start them at every boot.
 echo -n ":: Setting up daemons... "
-sed 's/^DAEMONS=.*/DAEMONS=\(syslog-ng dbus networkmanager crond kdm\)/g' /etc/rc.conf > /tmp/rc.conf; mv /tmp/rc.conf /etc/rc.conf
+sed -i 's/^DAEMONS=.*/DAEMONS=\(syslog-ng dbus networkmanager crond kdm\)/g' /etc/rc.conf
 echo "Done"
 
 # Setup pacman mirrorlist
