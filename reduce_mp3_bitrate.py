@@ -9,6 +9,8 @@ import os
 import sys
 import subprocess
 
+BIT_RATE = 128
+
 in_dir = sys.argv[1]
 out_dir = sys.argv[2]
 
@@ -18,15 +20,9 @@ else: dirname = tok[-1]
 out_dir += '/'+dirname
 os.makedirs (out_dir)
 
-f=open('/tmp/reduce.sh', 'w')
-f.write('lame --decode "$1" - | lame -b 128 - "$2"\n')
-f.close()
-
 for i in os.listdir (in_dir):
     if '.mp3' not in i: continue
     print i, '==>'
-    subprocess.call (['sh', '/tmp/reduce.sh', in_dir+'/'+i, out_dir+'/'+i])
+    subprocess.call (['lame', '-F', '-b', str(BIT_RATE), in_dir+'/'+i, out_dir+'/'+i])
     print ''
-
-os.remove ('/tmp/reduce.sh')
 
