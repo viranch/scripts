@@ -18,10 +18,11 @@ tok = in_dir.split('/')
 if tok[-1]=='': dirname = tok[-2]
 else: dirname = tok[-1]
 out_dir += '/'+dirname
-os.makedirs (out_dir)
+try: os.makedirs (out_dir)
+except OSError: pass
 
 for i in os.listdir (in_dir):
-    if '.mp3' not in i: continue
+    if '.mp3' not in i.lower(): continue
     print i, '==>'
     subprocess.call (['lame', '-F', '-b', str(BIT_RATE), in_dir+'/'+i, out_dir+'/'+i])
     print ''
