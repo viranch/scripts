@@ -1,0 +1,18 @@
+# Path to your oh-my-zsh configuration.
+export ZSH=$HOME/.oh-my-zsh
+
+# add a function path
+#fpath=($ZSH/functions $fpath)
+
+# Load all of the config files in ~/oh-my-zsh that end in .zsh
+for config_file ($ZSH/*.zsh) source $config_file
+
+# Customize to your needs...
+#export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl
+export EDITOR=vim
+
+# my aliases
+alias cyberoam='curl -s http://10.100.56.55:8090/httpclient.html -d "mode=191&username=200801001&password=200801001" | grep "<message>.*</message>" -o'
+alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/Connect$/✘ Down/g'"
+alias ksr='source /home/viranch/kde/bashrc; cs'
+
