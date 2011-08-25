@@ -27,7 +27,7 @@ alias slp='qdbus org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement or
 alias fdisk='sudo fdisk -l'
 alias utube='youtube-dl -ct'
 alias killkde="kill -TERM `\ps aux|grep startkde$|awk '{print $2}'`"
-alias killdr='killall drkonqi'
+alias killdr='killall -q drkonqi'
 
 # Pacman aliases
 alias p=pacman
