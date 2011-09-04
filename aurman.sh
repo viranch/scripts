@@ -5,16 +5,16 @@ root="/home/viranch/Softwares/Arch/AUR"
 function install()
 {
 	link="http://aur.archlinux.org/packages/$1/$1.tar.gz"
-	name="$1.tar.gz"
+	srcname="$1.tar.gz"
 	dirname=$1
 	cd $root/src/
 	wget -nc $link
-	if [ ! -f "$name" ]; then
+	if [ ! -f "$srcname" ]; then
 		echo ":: Error downloading from AUR"
 		return
 	fi
 
-	tar -zxvf $name
+	tar -zxvf $srcname
 	source $dirname/PKGBUILD
 	cd $dirname
 	src=$pkgname-$pkgver-$pkgrel.src.tar.gz
@@ -26,8 +26,8 @@ function install()
 		return
 	fi
 
-	mv $src ../$name
-	echo ":: Installing package..."
+	mv $src ../$srcname
+	echo ":: Compiling package..."
 	for dep in $(pacman -T ${depends[@]} ${makedepends[@]}); do
 		a=$(pacman -Ss "^$dep$")
 		if [ -z "$a" ]; then
@@ -35,18 +35,14 @@ function install()
 		fi
 	done
 	makepkg -si --noconfirm
-	pkg=$pkgname-$pkgver-$pkgrel-i686.pkg.tar.xz
-	if [ ! -f "$pkg" ]; then
+    if [ ! -f *.pkg.tar.xz ]; then
 		return
 	fi
 
-	mv $pkg $root/pkg/
+	mv *.pkg.tar.xz $root/pkg/
 	cd ..
 	rm -rf $dirname
 	echo ":: Install complete."
-	if [ -z "$makedepends" ]; then
-		return
-	fi
 }
 
 function remove()

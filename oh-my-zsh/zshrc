@@ -16,4 +16,8 @@ alias cyberoam='curl -s http://10.100.56.55:8090/httpclient.html -d "mode=191&us
 alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/Connect$/✘ Down/g'"
 alias ksr='source /home/viranch/kde/bashrc; cs'
 compdef _which whose=which
+compdef _pacman p=pacman
+alias imdb='python2 $HOME/playground/scripts/imdb.py'
+alias aurman='sh $HOME/playground/scripts/aurman.sh'
+alias trunkman='sh $HOME/playground/scripts/trunkman.sh'
 
