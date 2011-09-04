@@ -21,13 +21,16 @@ alias umnt=pumount
 alias shutdown='sudo shutdown -hP now'
 alias wget='wget --read-timeout=10'
 alias swget='swget --read-timeout=10'
-kmv() { kde-mv "$1" "$2" & }
 alias mencoder='mencoder -quiet -oac copy -ovc copy'
 alias slp='qdbus org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement org.kde.Solid.PowerManagement.suspendToRam'
 alias fdisk='sudo fdisk -l'
 alias utube='youtube-dl -ct'
+alias wv='sudo wvdial'
 alias killkde="kill -TERM `\ps aux|grep startkde$|awk '{print $2}'`"
 alias killdr='killall -q drkonqi'
+kcp() { kde-cp "$1" "$2" & }
+kmv() { kde-mv "$1" "$2" & }
+alias ko='kde-open'
 
 # Pacman aliases
 alias p=pacman
@@ -35,7 +38,7 @@ alias P='sudo pacman --noconfirm'
 alias pi='P -S'
 alias pq='p -Q'
 alias up='P -Syu'
-alias psc='P -Sc'
+alias clean='P -Sc'
 alias pss='p -Ss'
 alias psi='p -Si'
 alias pqs='pq -s'
