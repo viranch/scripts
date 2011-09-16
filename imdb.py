@@ -18,7 +18,7 @@ movie = xml.firstChild.childNodes[1]
 
 def data(o, attr): return o.attributes[attr].value
 
-print 'Title:', data(movie, 'title'), '('+data(movie, 'year')+')\n'
+print 'Title:', data(movie, 'title'), '('+data(movie, 'year')+')', '['+data(movie, 'rating')+']', '\n'
 
 print 'Genre:', data(movie, 'genre'), '\n'
 
@@ -27,6 +27,3 @@ print data(movie, 'actors'), '\n'
 
 print 'Plot:'
 print data(movie, 'plot'), '\n'
-
-print 'Rating:', data(movie, 'rating')
-
