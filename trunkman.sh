@@ -16,7 +16,7 @@ function _install() {
     pkg_file=$(ls /var/cache/pacman/pkg/$1*|tail -n1)
 	mkdir -p /tmp/trunkman.tmp
 	cd /tmp/trunkman.tmp
-	tar -xvf $1 --exclude .PKGINFO --exclude .INSTALL --overwrite
+	tar -xvf $pkg_file --exclude .PKGINFO --exclude .INSTALL --overwrite
 	cp -R usr/* ~/kde/install/
 	cd /tmp
 	rm -rf /tmp/trunkman.tmp
