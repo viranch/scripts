@@ -62,7 +62,7 @@ echo ":: Drivers installed"
 
 # KDE
 echo ":: Installing KDE"
-pacman -S ttf-bitstream-vera ttf-dejavu kdebase-workspace kdebase-dolphin kdebase-kwrite libreoffice kdegraphics-{gwenview,okular} kdemultimedia-kmix kdeplasma-applets-networkmanagement kdebase-plasma kdeartwork-kscreensaver
+pacman -S ttf-bitstream-vera ttf-dejavu ttf-liberation kdebase-workspace kdebase-dolphin kdebase-kwrite libreoffice kdegraphics-{gwenview,okular} kdemultimedia-kmix kdeplasma-applets-networkmanagement kdebase-plasma kdeartwork-kscreensaver
 pacman -S zip unzip unrar kdeutils-ark flashplugin youtube-dl
 pacman -S ntfs-3g dosfstools
 pacman -S gtk-theme-swtich2 oxygen-gtk
