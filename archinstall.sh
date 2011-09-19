@@ -15,10 +15,8 @@ alias pacman='pacman --noconfirm --needed'
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 if [ $# -eq 1 ]; then
 	echo "Server = $1" > /etc/pacman.d/mirrorlist
-	echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
-else
-	echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 fi
+echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
 
 # Initially force pacman to refresh the package lists
 echo ":: Updating base system first"
@@ -64,18 +62,163 @@ echo ":: Drivers installed"
 
 # KDE
 echo ":: Installing KDE"
-pacman -S ttf-bitstream-vera ttf-dejavu
-pacman -S kdebase-workspace yakuake kdebase-dolphin kdesdk-kate phonon-xine amarok choqok kdenetwork-kopete konversation libreoffice kdeutils-ark kdegraphics-{gwenview,okular,ksnapshot} kdemultimedia-kmix kdeplasma-applets-networkmanagement kdebase-plasma kdeartwork-kscreensaver chromium firefox vlc
-pacman -S zip unzip unrar wine flashplugin axel youtube-dl
-pacman -S ntfs-3g dosfstools gparted
+pacman -S ttf-bitstream-vera ttf-dejavu kdebase-workspace kdebase-dolphin kdebase-kwrite libreoffice kdegraphics-{gwenview,okular} kdemultimedia-kmix kdeplasma-applets-networkmanagement kdebase-plasma kdeartwork-kscreensaver
+pacman -S zip unzip unrar kdeutils-ark flashplugin youtube-dl
+pacman -S ntfs-3g dosfstools
 pacman -S gtk-theme-swtich2 oxygen-gtk
-pacman -S kdeplasma-addons-applets-{notes,rssnow}
-#pacman -S kdegraphics-kolourpaint
-#pacman -S kdegames-ksquares kdegames-kmines
+
+echo -n "Install quake-like terminal (Yakuake)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S yakuake zsh
+fi
+echo ""
+
+echo -n "Install video player (VLC Media Player)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S vlc
+fi
+echo ""
+
+echo -n "Install music player (Amarok)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S amarok
+fi
+echo ""
+
+echo -n "Install twitter client (Choqok)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S choqok
+fi
+echo ""
+
+echo -n "Install chat client for GMail, MSN, Y!, Facebook, etc (Kopete)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdenetwork-kopete
+fi
+echo ""
+
+echo -n "Install IRC client (Konversation)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S konversation
+fi
+echo ""
+
+echo -n "Install screenshot snapper (KSnapshot)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdegraphics-ksnapshot
+fi
+echo ""
+
+echo -n "Install internet browser, Chromium/Firefox? [1/2] "
+read opt
+if [ "$opt" = "1" ]
+then
+    pacman -S chromium
+elif [ "$opt" = "2" ]
+then
+    pacman -S firefox
+fi
+echo ""
+
+echo -n "Install notes desktop applet? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdeplasma-addons-applets-notes
+fi
+echo ""
+
+echo -n "Install RSS feeds desktop applet? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdeplasma-addons-applets-rssnow
+fi
+echo ""
+
+echo -n "Install users manager (KUser)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdeadmin-kuser
+fi
+echo ""
+
+echo -n "Install task scheduler (KCron)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdeadmin-kcron
+fi
+echo ""
+
+echo -n "Install paint application (KolourPaint)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdegraphics-kolourpaint
+fi
+echo ""
+
+echo -n "Install minesewwper-like game (KMines)? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S kdegames-kmines
+fi
+echo ""
+
+echo -n "Install VCS (Git/Mercurial/SVN/All)? [1/2/3/A] "
+read opt
+if [ "$opt" = "1" ]
+then
+    pacman -S git
+elif [ "$opt" = "2" ]
+then
+    pacman -S mercurial
+elif [ "$opt" = "3" ]
+then
+    pacman -S subversion
+elif [ "$opt" = "A" ] || [ "$opt" = "a" ]
+then
+    pacman -S git mercurial subversion
+fi
+echo ""
+
+echo -n "Install python? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S python2 python
+fi
+echo ""
+
+echo -n "Install Qt SDK? [Y/n] "
+read opt
+if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
+then
+    pacman -S qt-doc qtcreator
+fi
+echo ""
+
 #pacman -S mp3splt
 #pacman -S wireshark php-apache
-#pacman -S cmake python2-qt qtcreator qt-doc subversion git mercurial
-#aurman -S ttf-ms-fonts ttf-vista-fonts ttf-google-webfonts ttf-tahoma
+#pacman -S cmake python2-qt
+#aurman -S ttf-ms-fonts ttf-vista-fonts ttf-google-webfonts ttf-tahoma partitionmanager-svn
 echo ":: Install complete."
 echo
 
