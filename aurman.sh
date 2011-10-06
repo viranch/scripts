@@ -19,12 +19,18 @@ function installpkg()
     done
 
     echo ":: Installing $pkg"
-    pkgfile=$(ls $root/pkg/$pkgname-$pkgver-$pkgrel-*|tail -n1)
+    pkgfile=$(ls $root/pkg/$pkgname-$pkgver-$pkgrel-* 2> /dev/null|tail -n1)
     if [ ! -z "$pkgfile" ]; then
         sudo pacman -U "$pkgfile" --noconfirm
     else
         cd $pkg
         makepkg -si --noconfirm
+        ret=$?
+        if [ $ret = "1" ]; then
+            exit $ret
+        else
+            cp *pkg* $root/pkg/
+        fi
     fi
 
     echo ":: Removing temporary dependencies"
