@@ -20,7 +20,7 @@ function installpkg()
     done
 
     echo ":: Installing $pkg"
-    pkgfile=$(ls $root/pkg/$pkgname-$pkgver-$pkgrel-* 2> /dev/null|tail -n1)
+    pkgfile=$(ls $root/pkg/$pkgname-$pkgver-$pkgrel-{$(arch),any}.pkg.tar.xz 2> /dev/null|tail -n1)
     if [ ! -z "$pkgfile" ]; then
         sudo pacman -U "$pkgfile" --noconfirm
     else
