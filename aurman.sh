@@ -6,15 +6,16 @@ function installpkg()
 {
     pkg=$1
 
-    echo ":: Downloading package file"
+    echo ":: Downloading package file for $pkg"
     cd /tmp
     wget -q http://aur.archlinux.org/packages/$pkg/$pkg.tar.gz -O - | tar zx
     source $pkg/PKGBUILD
     echo ":: Installing missing dependencies"
     for dep in $(pacman -T ${depends[@]} ${makedepends[@]}); do
+        dep=$(echo $dep|sed 's/>.*//g')
         a=$(pacman -Ss "^$dep$")
         if [ -z "$a" ]; then
-            $0 $dep
+            $0 -S $dep
         fi
     done
 
@@ -29,7 +30,7 @@ function installpkg()
         if [ $ret = "1" ]; then
             exit $ret
         else
-            cp *pkg.tar.xz $root/pkg/
+            cp $pkgname-$pkgver-$pkgrel-*pkg.tar.xz $root/pkg/
         fi
     fi
 
@@ -37,7 +38,7 @@ function installpkg()
     for makedep in ${makedepends[@]}; do
         a=$(pacman -Ss "^$makedep$")
         if [ -z "$a" ]; then
-            removepkg $makedep
+            $0 -R $makedep
         fi
     done
 
@@ -57,7 +58,7 @@ function removepkg()
     for dep in ${depends[@]} ${makedepends[@]}; do
         a=$(pacman -Ss "^$dep$")
         if [ -z "$a" ]; then
-            $0 $dep
+            $0 -R $dep
         fi
     done
 
@@ -67,6 +68,7 @@ function removepkg()
     echo ":: $pkg removed"
 }
 
+source /etc/makepkg.conf
 while getopts "SR" OPTION
 do
 	case $OPTION in
