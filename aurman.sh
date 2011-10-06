@@ -2,67 +2,81 @@
 
 root="/home/viranch/Softwares/Arch/AUR"
 
-function install()
+function installpkg()
 {
-	link="http://aur.archlinux.org/packages/$1/$1.tar.gz"
-	srcname="$1.tar.gz"
-	dirname=$1
-	cd $root/src/
-	wget -nc $link
-	if [ ! -f "$srcname" ]; then
-		echo ":: Error downloading from AUR"
-		return
-	fi
+    pkg=$1
 
-	tar -zxvf $srcname
-	source $dirname/PKGBUILD
-	cd $dirname
-	src=$pkgname-$pkgver-$pkgrel.src.tar.gz
-	if [ ! -f $src ]; then
-		echo ":: Downloading sources..."
-		makepkg --allsource
-	fi
-	if [ ! -f "$src" ]; then
-		return
-	fi
+    echo ":: Downloading package file"
+    cd /tmp
+    wget -q http://aur.archlinux.org/packages/$pkg/$pkg.tar.gz -O - | tar zx
+    source $pkg/PKGBUILD
+    echo ":: Installing missing dependencies"
+    for dep in $(pacman -T ${depends[@]} ${makedepends[@]}); do
+        a=$(pacman -Ss "^$dep$")
+        if [ -z "$a" ]; then
+            $0 $dep
+        fi
+    done
 
-	mv $src ../$srcname
-	echo ":: Compiling package..."
-	for dep in $(pacman -T ${depends[@]} ${makedepends[@]}); do
-		a=$(pacman -Ss "^$dep$")
-		if [ -z "$a" ]; then
-			aurman -S $dep
-		fi
-	done
-	makepkg -si --noconfirm
-    if [ ! -f *.pkg.tar.xz ]; then
-		return
-	fi
+    echo ":: Installing $pkg"
+    pkgfile=$(ls $root/pkg/$pkgname-$pkgver-$pkgrel-*|tail -n1)
+    if [ ! -z "$pkgfile" ]; then
+        sudo pacman -U "$pkgfile" --noconfirm
+    else
+        cd $pkg
+        makepkg -si --noconfirm
+    fi
 
-	mv *.pkg.tar.xz $root/pkg/
-	cd ..
-	rm -rf $dirname
-	echo ":: Install complete."
+    echo ":: Removing temporary dependencies"
+    for makedep in ${makedepends[@]}; do
+        a=$(pacman -Ss "^$makedep$")
+        if [ -z "$a" ]; then
+            removepkg $makedep
+        fi
+    done
+
+    echo ":: $pkg installed"
 }
 
-function remove()
+function removepkg()
 {
-	rm -f ~/Softwares/Arch/AUR/{pkg,src}/$1*
-	sudo pacman -Rs $1
-	echo ":: Done."
+    pkg=$1
+
+    echo ":: Getting dependency list"
+    cd /tmp
+    wget -q http://aur.archlinux.org/packages/$pkg/$pkg.tar.gz -O - | tar zx
+    source $pkg/PKGBUILD
+
+    echo ":: Removing dependencies"
+    for dep in ${depends[@]} ${makedepends[@]}; do
+        a=$(pacman -Ss "^$dep$")
+        if [ -z "$a" ]; then
+            $0 $dep
+        fi
+    done
+
+    echo ":: Removing $pkg"
+    sudo pacman -Rs $pkg --noconfirm
+
+    echo ":: $pkg removed"
 }
 
-while getopts "S:R:" OPTION
+while getopts "SR" OPTION
 do
 	case $OPTION in
 		S)
-			install $OPTARG
+			shift $((OPTIND-1))
+            for pkg in "$@"; do
+                installpkg $pkg
+            done
 			exit 0
 			;;
 		R)
-			remove $OPTARG
+			shift $((OPTIND-1))
+            for pkg in "$@"; do
+                removepkg $pkg
+            done
 			exit 0
 			;;
 	esac
 done
-
