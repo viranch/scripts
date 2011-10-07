@@ -3,11 +3,13 @@
 cd $1
 git init
 ~/playground/fast-export/hg-fast-export.sh -r .
-dir=$(basename $1)
-mkdir /tmp/$dir
-mv * /tmp/$dir
+rm -rf *
 git checkout HEAD
-git remote add origin https://viranch@github.com/viranch/$2.git
-git push origin master
-rm -rf /tmp/$dir .hg/
+git filter-branch -f --env-filter '
+    GIT_AUTHOR_NAME='Viranch Mehta'
+    GIT_AUTHOR_EMAIL='viranch.mehta@gmail.com'
+    GIT_COMMITTER_NAME='Viranch Mehta'
+    GIT_COMMITTER_EMAIL='viranch.mehta@gmail.com'
+' HEAD
+rm -rf .hg/
 
