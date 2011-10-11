@@ -22,10 +22,10 @@ function installpkg()
     echo ":: Installing $pkg"
     pkgfile=$(ls $root/pkg/$pkgname-$pkgver-$pkgrel-{$(arch),any}.pkg.tar.xz 2> /dev/null|tail -n1)
     if [ ! -z "$pkgfile" ]; then
-        sudo pacman -U "$pkgfile" --noconfirm
+        sudo pacman -U "$pkgfile"
     else
         cd $pkg
-        makepkg -si --noconfirm
+        makepkg -si
         ret=$?
         if [ $ret = "1" ]; then
             exit $ret
@@ -33,14 +33,6 @@ function installpkg()
             cp $pkgname-$pkgver-$pkgrel-*pkg.tar.xz $root/pkg/
         fi
     fi
-
-    echo ":: Removing temporary dependencies"
-    for makedep in ${makedepends[@]}; do
-        a=$(pacman -Ss "^$makedep$")
-        if [ -z "$a" ]; then
-            $0 -R $makedep
-        fi
-    done
 
     echo ":: $pkg installed"
 }
