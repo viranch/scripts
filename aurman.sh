@@ -11,6 +11,8 @@ function installpkg()
     wget -q http://aur.archlinux.org/packages/$pkg/$pkg.tar.gz -O - | tar zx
     source $pkg/PKGBUILD
     echo ":: Installing missing dependencies"
+    echo "==> Build deps: " ${makedepends[@]}
+    echo "==> Runtime deps: " ${depends[@]}
     for dep in $(pacman -T ${depends[@]} ${makedepends[@]}); do
         dep=$(echo $dep|sed 's/>.*//g')
         a=$(pacman -Ss "^$dep$")
