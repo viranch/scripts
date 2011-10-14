@@ -16,7 +16,8 @@ else
     enddate=$2
 fi
 
-html=$(curl -s "http://myservices.relianceada.com/datausage/jsp/ProcessCDRRequest?Mdn=$num&StartDate=$1&EndDate=$enddate&ProductType=1&RequestType=Query")
+link="http://myservices.relianceada.com/datausage/jsp/ProcessCDRRequest?Mdn=$num&StartDate=$1&EndDate=$enddate&ProductType=1&RequestType=Query"
+html=$(curl -s $link)
 n=$(echo "$html"|grep greybghdrfortotal -A 6|tail -n1|sed "s/.*<center>//g"|sed "s/<\/center>.*//g")
 echo "$n" GB
 
