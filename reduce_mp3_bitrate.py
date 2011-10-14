@@ -14,16 +14,24 @@ BIT_RATE = 128
 in_dir = sys.argv[1]
 out_dir = sys.argv[2]
 
-tok = in_dir.split('/')
-if tok[-1]=='': dirname = tok[-2]
-else: dirname = tok[-1]
-out_dir += '/'+dirname
-try: os.makedirs (out_dir)
-except OSError: pass
+# Returns '/tmp/Music/English/Akon' from '/home/viranch/data/Music/English/Akon'
+def get_dest (srcpath):
+    path = in_dir.replace('/'+os.path.basename(in_dir), '')
+    print srcpath, path
+    return srcpath.replace(path, out_dir+'/')
 
-for i in os.listdir (in_dir):
-    if '.mp3' not in i.lower(): continue
-    print i, '==>'
-    subprocess.call (['lame', '-F', '-b', str(BIT_RATE), in_dir+'/'+i, out_dir+'/'+i])
-    print ''
+def convert(path):
+    dest=get_dest(path)
+    try: os.makedirs(dest)
+    except: pass
+    for i in os.listdir (path):
+        src=path+'/'+i
+        if '.mp3' in i:
+            target=dest+'/'+i
+            print src, '==>', target
+            subprocess.call (['lame', '-F', '-b', str(BIT_RATE), src, target])
+            print ''
+        elif os.path.isdir(src):
+            convert (src)
 
+convert(in_dir)
