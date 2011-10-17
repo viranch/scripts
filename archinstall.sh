@@ -182,20 +182,20 @@ then
 fi
 echo ""
 
-echo -n "Install VCS (Git/Mercurial/SVN/All)? [1/2/3/A] "
+echo -n "Install VCS (Git/Mercurial/SVN/All/None)? [1/2/3/A/n] "
 read opt
 if [ "$opt" = "1" ]
 then
-    pacman -S git
+    pacman -S git openssh
 elif [ "$opt" = "2" ]
 then
-    pacman -S mercurial
+    pacman -S mercurial openssh
 elif [ "$opt" = "3" ]
 then
-    pacman -S subversion
+    pacman -S subversion openssh
 elif [ "$opt" = "A" ] || [ "$opt" = "a" ]
 then
-    pacman -S git mercurial subversion
+    pacman -S git mercurial subversion openssh
 fi
 echo ""
 

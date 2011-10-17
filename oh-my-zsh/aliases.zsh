@@ -6,7 +6,7 @@ alias history='fc -l 1'
 
 # List direcory contents
 alias lsa='ls -lah'
-alias l='ls -l'
+alias l='ls -lh'
 alias ll='ls -la'
 alias sl=ls # often screw this up
 
@@ -22,7 +22,6 @@ alias shutdown='sudo shutdown -hP now'
 alias wget='wget --read-timeout=10'
 alias swget='swget --read-timeout=10'
 alias mencoder='mencoder -quiet -oac copy -ovc copy'
-alias slp='qdbus org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement org.kde.Solid.PowerManagement.suspendToRam'
 alias fdisk='sudo fdisk -l'
 alias utube='youtube-dl -ct'
 alias wv='sudo wvdial'
