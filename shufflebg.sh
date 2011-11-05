@@ -15,5 +15,6 @@ do
     r=$((RANDOM % $count + 1))
     wp=$(head -n$r /tmp/wplist|tail -n1)
     $bin $args "$wp"
+    echo "$wp" > /tmp/wp
     sleep $interval
 done
