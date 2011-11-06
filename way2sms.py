@@ -14,7 +14,7 @@ def login (user, passwd):
     f = opener.open('http://site5.way2sms.com/Login1.action', 'username='+user+'&password='+passwd)
     s = f.read()
     f.close()
-    return 'Invalid Mobile No/Password .. Please try again' not in s
+    return 'logout' in s
 
 def send (recvr, text):
     f = opener.open('http://site5.way2sms.com/quicksms.action', 'HiddenAction=instantsms&Action=455dasv556&MobNo='+recvr+'&textArea='+text)
