@@ -3,11 +3,23 @@ args="--bg-scale"
 interval=60
 
 if [ -f "/tmp/wp.pid" ]; then
-    kill -0 `cat /tmp/wp.pid`
+    pid=$(cat /tmp/wp.pid)
+    kill -0 $pid
     ret=$?
     if [ $ret -eq 0 ]; then
-        echo "Another instance of the shuffler is already running. Exiting..."
-        exit 2
+        kill -INT $pid
+        kill -0 $pid
+        ret=$?
+        if [ $ret -eq 0 ]; then
+            kill -TERM $pid
+            kill -0 $pid
+            ret=$?
+            if [ $ret -eq 0 ]; then
+                kill -KILL $pid
+                kill -0 $pid
+                ret=$?
+            fi
+        fi
     fi
 fi
 

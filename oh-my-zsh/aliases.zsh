@@ -30,6 +30,10 @@ alias killdr='killall -q drkonqi'
 kcp() { kde-cp "$1" "$2" & }
 kmv() { kde-mv "$1" "$2" & }
 alias ko='kde-open'
+alias _rcd='sudo rc.d'
+alias start='_rcd start'
+alias stop='_rcd stop'
+alias restart='_rcd restart'
 
 # Pacman aliases
 alias p=pacman
