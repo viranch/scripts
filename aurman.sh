@@ -22,7 +22,7 @@ function installpkg()
     done
 
     echo ":: Installing $pkg"
-    pkgfile=$(ls $root/pkg/$pkgname-$pkgver-$pkgrel-{$(arch),any}.pkg.tar.xz 2> /dev/null|tail -n1)
+    pkgfile=$(ls $root/$pkgname-$pkgver-$pkgrel-{$(arch),any}.pkg.tar.xz 2> /dev/null|tail -n1)
     if [ ! -z "$pkgfile" ]; then
         sudo pacman -U "$pkgfile"
     else
@@ -32,7 +32,7 @@ function installpkg()
         if [ $ret = "1" ]; then
             exit $ret
         else
-            cp $pkgname-$pkgver-$pkgrel-*pkg.tar.xz $root/pkg/
+            cp $pkgname-$pkgver-$pkgrel-*pkg.tar.xz $root/
         fi
     fi
 

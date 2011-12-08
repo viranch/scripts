@@ -18,6 +18,7 @@ alias x=extract
 alias sysmon='echo "USER       PID %CPU %MEM  COMMAND" && "ps" aux | tail | cut -c1-25,65- | sort -n -k3'
 alias mnt=pmount
 alias umnt=pumount
+alias mntcd='sudo mount -t iso9660'
 alias shutdown='sudo shutdown -hP now'
 alias wget='wget --read-timeout=10'
 alias swget='swget --read-timeout=10'
@@ -51,3 +52,13 @@ alias pqi='pq -i'
 alias remove='P -Rs'
 whose () { pqo $(which $1) }
 plist() { pacman -Qei|awk ' BEGIN {FS=":"}/^Name/{printf("\033[1;36m%s\033[1;37m", $2)}/^Description/{print $2}' }
+
+# Android aliases
+SDK_PATH="$HOME/Softwares/android-sdk-linux"
+alias adb="$SDK_PATH/platform-tools/adb"
+alias android="$SDK_PATH/tools/android"
+alias srv='adb start-server && sudo /sbin/udevd --daemon'
+alias proj='android create project --target 1'
+alias apk='adb -d install -rs'
+alias ami='ant -q debug && adb -d install -rs bin/*-debug.apk'
+alias avmi='ant debug && adb -d install -rs bin/*-debug.apk'
