@@ -35,6 +35,7 @@ alias _rcd='sudo rc.d'
 alias start='_rcd start'
 alias stop='_rcd stop'
 alias restart='_rcd restart'
+alias v='vim'
 
 # Pacman aliases
 alias p=pacman
