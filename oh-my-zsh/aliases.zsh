@@ -36,6 +36,7 @@ alias start='_rcd start'
 alias stop='_rcd stop'
 alias restart='_rcd restart'
 alias v='vim'
+alias e='kde-open .'
 
 # Pacman aliases
 alias p=pacman
