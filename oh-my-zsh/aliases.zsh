@@ -18,7 +18,7 @@ alias x=extract
 alias sysmon='echo "USER       PID %CPU %MEM  COMMAND" && "ps" aux | tail | cut -c1-25,65- | sort -n -k3'
 alias mnt=pmount
 alias umnt=pumount
-alias mntcd='sudo mount -t iso9660'
+alias mntcd='sudo mount -o loop,ro -t iso9660'
 alias shutdown='sudo shutdown -hP now'
 alias wget='wget --read-timeout=10'
 alias swget='swget --read-timeout=10'
