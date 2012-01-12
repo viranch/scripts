@@ -34,6 +34,8 @@ alias usage='sh $HOME/playground/scripts/broadband_usage.sh'
 alias skins-dl='python2 $HOME/playground/stuff/skins.be/skins-dl.py'
 alias chiface='sh $HOME/playground/scripts/change_iface.sh $HOME/Softwares/Arch/conky-arch2/'
 alias text='python2 $HOME/playground/scripts/way2sms.py 9374394249'
+alias paste='sh $HOME/playground/scripts/pastebin.sh post'
+alias getpaste='sh $HOME/playground/scripts/pastebin.sh get'
 
 # Git aliases
 function current_branch() {
