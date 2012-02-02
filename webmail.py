@@ -2,7 +2,10 @@ import sys, getpass
 import urllib2
 import cookielib
 
-username = sys.argv[1]
+if len(sys.argv)<2:
+    username = raw_input('Username: ')
+else:
+    username = sys.argv[1]
 
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
@@ -18,9 +21,7 @@ while True:
     f = opener.open('https://webmail.daiict.ac.in/zimbra/?zinitmode=http','loginOp=login&username='+username+'&password='+password+'&client=standard')
     s = f.read()
     f.close()
-    if 'incorrect' not in s:
-        print ''
-        break
+    if 'incorrect' not in s: break
     print 'Sorry, try again.'
 
 opener.addheaders = opener.addheaders[:2]
@@ -49,7 +50,7 @@ while True:
     when = parse(s, '<td nowrap align="right">\n\t\t\t\t\t\t\t\t\t', '\n')
     emails.append([sender, subj, when, frag])
 
-print len(emails), 'new email(s).\n'
+print '\n', len(emails), 'unread email(s).\n'
 for email in emails:
     print 'From:', email[0]
     print 'Subject:', email[1]
