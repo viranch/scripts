@@ -1,3 +1,6 @@
+#!/usr/bin/env python2
+# Author: Viranch Mehta <viranch.mehta@gmail.com>
+
 import sys, getpass
 import urllib2
 import cookielib
