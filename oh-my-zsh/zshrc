@@ -36,6 +36,7 @@ alias chiface='sh $HOME/playground/scripts/change_iface.sh $HOME/Softwares/Arch/
 alias text='python2 $HOME/playground/scripts/way2sms.py 9374394249'
 alias paste='sh $HOME/playground/scripts/pastebin.sh post'
 alias getpaste='sh $HOME/playground/scripts/pastebin.sh get'
+alias webmail='python2 $HOME/playground/scripts/webmail.py viranch_mehta'
 
 # Git aliases
 function current_branch() {
