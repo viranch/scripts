@@ -3,7 +3,6 @@ import urllib2
 import cookielib
 
 username = sys.argv[1]
-password = getpass.getpass()
 
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
@@ -14,7 +13,15 @@ opener.addheaders = [('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/
                      ('Content-Type','application/x-www-form-urlencoded'),
                      ('Cookie','ZM_TEST=true; JSESSIONID=1ce4g8lu4cp2q')]
 
-opener.open('https://webmail.daiict.ac.in/zimbra/?zinitmode=http','loginOp=login&username='+username+'&password='+password+'&client=standard').close()
+while True:
+    password = getpass.getpass()
+    f = opener.open('https://webmail.daiict.ac.in/zimbra/?zinitmode=http','loginOp=login&username='+username+'&password='+password+'&client=standard')
+    s = f.read()
+    f.close()
+    if 'incorrect' not in s:
+        print ''
+        break
+    print 'Sorry, try again.'
 
 opener.addheaders = opener.addheaders[:2]
 f = opener.open('http://webmail.daiict.ac.in/zimbra/h/search?mesg=welcome&initial=true&app=')
@@ -29,6 +36,7 @@ def parse(s, start, end):
     s = s[s.find(start)+len(start):]
     return s[:s.find(end)]
 
+emails = []
 while True:
     st = s.find('<tr onclick')
     if st<0: break
@@ -39,9 +47,13 @@ while True:
     subj = parse(s, '<span class="Fragment">', '</span>')
     frag = parse(s, '<span class=\'Fragment\'>', '</span>')
     when = parse(s, '<td nowrap align="right">\n\t\t\t\t\t\t\t\t\t', '\n')
-    print 'From:', sender
-    print 'Subject:', subj
-    print 'Received:', when
-    print frag
+    emails.append([sender, subj, when, frag])
+
+print len(emails), 'new email(s).\n'
+for email in emails:
+    print 'From:', email[0]
+    print 'Subject:', email[1]
+    print 'Received:', email[2]
+    print email[3]
     print ''
 
