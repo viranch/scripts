@@ -4,6 +4,7 @@
 import sys, getpass
 import urllib2
 import cookielib
+import HTMLParser
 
 if len(sys.argv)<2:
     username = raw_input('Username: ')
@@ -38,7 +39,7 @@ f.close()
 
 def parse(s, start, end):
     s = s[s.find(start)+len(start):]
-    return s[:s.find(end)]
+    return HTMLParser.HTMLParser().unescape(s[:s.find(end)])
 
 emails = []
 while True:
