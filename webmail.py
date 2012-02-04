@@ -67,7 +67,7 @@ def show_emails(s):
         when = parse(s, '<td nowrap align="right">\n\t\t\t\t\t\t\t\t\t', '\n')
         emails.append([sender, subj, when, frag])
 
-    for email in emails:
+    for email in emails[:3]:
         print 'From:', email[0]
         print 'Subject:', email[1]
         print 'Received:', email[2]
@@ -83,5 +83,5 @@ for folder in check_emails(s):
         f = opener.open(folder[0])
         sf = f.read()
         f.close()
-    print folder[2], 'unread email(s) in', folder[1]
+    print folder[2], 'unread email(s) in', '"'+folder[1]+'"', '(showing top 3):'
     show_emails(sf)
