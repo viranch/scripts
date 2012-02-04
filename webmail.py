@@ -11,31 +11,23 @@ if len(sys.argv)<2:
 else:
     username = sys.argv[1]
 
-cj = cookielib.CookieJar()
-opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-opener.addheaders = [('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7'),
-                     ('Host','webmail.daiict.ac.in'),
-                     ('Origin','https://webmail.daiict.ac.in'),
-                     ('Referer','https://webmail.daiict.ac.in/zimbra/?zinitmode=http'),
-                     ('Content-Type','application/x-www-form-urlencoded'),
-                     ('Cookie','ZM_TEST=true; JSESSIONID=1ce4g8lu4cp2q')]
+def make_cookie(ck_name, ck_value):
+    return cookielib.Cookie(version=0, name=ck_name, value=ck_value, port=None, port_specified=False, domain='webmail.daiict.ac.in', domain_specified=False, domain_initial_dot=False, path='/', path_specified=True, secure=False, expires=None, discard=True, comment=None, comment_url=None, rest={'HttpOnly': None}, rfc2109=False)
 
+cj = cookielib.CookieJar()
+cj.set_cookie(make_cookie("ZM_TEST", "true"))
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+opener.addheaders = [('Host','webmail.daiict.ac.in'),
+                     ('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7')]
+
+test_string  = '<b>Mobile</b> is recommended for mobile devices. <br><br>To set <b>Default</b> to be your preferred client type, change the login options in your Preferences, General tab after you log in.</div>'
 while True:
     password = getpass.getpass()
-    f = opener.open('https://webmail.daiict.ac.in/zimbra/?zinitmode=http','loginOp=login&username='+username+'&password='+password+'&client=standard')
+    f = opener.open('http://webmail.daiict.ac.in/zimbra/?loginOp=login&username='+username+'&password='+password+'&client=standard')
     s = f.read()
     f.close()
-    if 'incorrect' not in s: break
+    if test_string not in s: break
     print 'Sorry, try again.'
-
-opener.addheaders = opener.addheaders[:2]
-f = opener.open('http://webmail.daiict.ac.in/zimbra/h/search?mesg=welcome&initial=true&app=')
-s = f.read()
-f.close()
-
-# FIXME: logout request does not return proper 302, as expected
-#opener.addheaders.append( ('Referer','http://webmail.daiict.ac.in/zimbra/h/search?mesg=welcome&initial=true&app=') )
-#opener.open('http://webmail.daiict.ac.in/zimbra/?loginOp=logout').close()
 
 def parse(s, start, end):
     s = s[s.find(start)+len(start):]
