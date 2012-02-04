@@ -33,6 +33,19 @@ def parse(s, start, end):
     s = s[s.find(start)+len(start):]
     return HTMLParser.HTMLParser().unescape(s[:s.find(end)])
 
+print ''
+while True:
+    st = s.find('<span title=')
+    if st<0: break
+    s = s[st+1:]
+    folder = s[s.find('>')+1:s.find('<')]
+    if '(' in folder:
+        tok = folder.split('\n')
+        name = tok[0]
+        count = tok[1]
+        count = count[count.find('(')+1:count.find(')')]
+        print count, 'unread email(s) in', name
+
 emails = []
 while True:
     st = s.find('<tr onclick')
@@ -46,7 +59,7 @@ while True:
     when = parse(s, '<td nowrap align="right">\n\t\t\t\t\t\t\t\t\t', '\n')
     emails.append([sender, subj, when, frag])
 
-print '\n', len(emails), 'unread email(s).\n'
+if len(emails)>0: print '\n', 'Inbox:'
 for email in emails:
     print 'From:', email[0]
     print 'Subject:', email[1]
