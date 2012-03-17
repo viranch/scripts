@@ -37,6 +37,7 @@ alias stop='_rcd stop'
 alias restart='_rcd restart'
 alias v='vim'
 alias e='kde-open .'
+alias plasmoidpkg='zip -r widget.plasmoid * && plasmapkg -u widget.plasmoid && rm widget.plasmoid'
 
 # Pacman aliases
 alias p=pacman
