@@ -37,7 +37,8 @@ alias text='python2 $HOME/playground/scripts/way2sms.py 9374394249'
 alias paste='sh $HOME/playground/scripts/pastebin.sh post'
 alias getpaste='sh $HOME/playground/scripts/pastebin.sh get'
 alias webmail='python2 $HOME/playground/scripts/webmail.py viranch_mehta'
-alias fbchat='sudo route add -host chat.facebook.com gw 192.168.42.129'
+alias fbchat='sudo route add chat.facebook.com gw'
+alias irc='sudo route add chat.freenode.net gw'
 
 # Git aliases
 function current_branch() {
