@@ -37,6 +37,10 @@ alias stop='_rcd stop'
 alias restart='_rcd restart'
 alias v='vim'
 alias e='kde-open .'
+alias plasmoidpkg='zip -r widget.plasmoid metadata.desktop contents && plasmapkg -u widget.plasmoid && rm widget.plasmoid'
+alias routefb='sudo route add chat.facebook.com gw'
+alias routeirc='sudo route add chat.freenode.net gw'
+function myroutes() { routefb $1 && routeirc $1 }
 
 # Pacman aliases
 alias p=pacman
