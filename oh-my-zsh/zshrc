@@ -18,7 +18,8 @@ alias sl='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/
 alias slp='slock &; sl'
 alias atm='cat ~/Softwares/card | xclip'
 alias ksr='source /home/viranch/kde/bashrc; cs'
-x=$(cat /proc/cpuinfo|grep processor|wc -l)
+#x=$(cat /proc/cpuinfo|grep processor|wc -l)
+x=4
 alias m='make -j$((x+1))'
 alias mi='sudo make install -j$((x+1))'
 compdef _which whose=which
