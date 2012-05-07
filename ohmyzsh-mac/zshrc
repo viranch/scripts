@@ -1,13 +1,11 @@
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/playground/scripts/ohmyzsh-mac
-export ZSHCOMMON=$HOME/playground/scripts/ohmyzsh-common
 
 # add a function path
 #fpath=($ZSH/functions $fpath)
 
 # Load all of the config files in ~/oh-my-zsh that end in .zsh
-for config_file ($ZSHCOMMON/*.zsh) source $config_file
-for config_file ($ZSH/*.zsh) source $config_file
+for config_file ($ZSH/../ohmyzsh-common/*.zsh $ZSH/*.zsh) source $config_file
 
 # Customize to your needs...
 #export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl
