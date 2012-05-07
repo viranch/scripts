@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-export ZSH=$HOME/playground/scripts/oh-my-zsh
+export ZSH=$HOME/playground/scripts/ohmyzsh-arch
 export ZSHCOMMON=$HOME/playground/scripts/ohmyzsh-common
 
 # add a function path
