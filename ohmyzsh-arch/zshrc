@@ -20,10 +20,9 @@ alias sl='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/
 alias slp='slock &; sl'
 alias atm='cat ~/Softwares/card | xclip'
 alias ksr='source /home/viranch/kde/bashrc; cs'
-#x=$(cat /proc/cpuinfo|grep processor|wc -l)
-x=4
+x=$(cat /proc/cpuinfo|grep processor|wc -l)
 alias m='make -j$((x+1))'
-alias mi='sudo make install -j$((x+1))'
+alias mi='sudo make install'
 compdef _which whose=which
 compdef _pacman p=pacman
 compdef _sudo _=sudo
@@ -42,41 +41,4 @@ alias getpaste='sh $HOME/playground/scripts/pastebin.sh get'
 alias webmail='python2 $HOME/playground/scripts/webmail.py viranch_mehta'
 alias fbchat='sudo route add chat.facebook.com gw'
 alias irc='sudo route add chat.freenode.net gw'
-
-# Git aliases
-function current_branch() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo ${ref#refs/heads/}
-}
-
-alias g='git'
-compdef _git g=git
-alias gi='git init'
-compdef _git gi=git-init
-alias gcl='git clone'
-compdef _git gcl=git-clone
-alias gco='git checkout'
-compdef _git gco=git-checkout
-alias gst='git status'
-compdef _git gst=git-status
-alias gl='git pull'
-compdef _git gll=git-pull
-alias gd='git diff'
-compdef _git gd=git-diff
-alias gc='git commit -am'
-compdef _git gc=git-commit
-alias gp='git push'
-compdef _git gp=git-push
-alias glg='git log --max-count=5'
-compdef _git glg=git-log
-
-# Qt functions
-function qtmake() {
-    local srcFolder
-    srcFolder=$(pwd)
-    mkdir -p ../build
-    cd ../build
-    qmake $srcFolder
-    make -j3
-}
-
+function myroutes() { fbchat $1 && irc $1 }
