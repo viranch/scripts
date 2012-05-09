@@ -16,6 +16,7 @@ alias cyberoam='curl -s http://10.100.56.55:8090/httpclient.html -d "mode=191&us
 alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/Connect$/✘ Down/g'"
 alias sysmon='echo "USER       PID %CPU %MEM" && ps aux | sort -nrk3 | head'
 alias atm='cat ~/Softwares/card | xclip'
+alias ssharch='ssh viranch@192.168.56.101'
 alias ksr='source $HOME/kde/bashrc; cs'
 alias qm='qmake -spec mac-g++'
 #x=$(cat /proc/cpuinfo|grep processor|wc -l)
