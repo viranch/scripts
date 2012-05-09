@@ -17,6 +17,7 @@ alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep
 alias sysmon='echo "USER       PID %CPU %MEM" && ps aux | sort -nrk3 | head'
 alias atm='cat ~/Softwares/card | xclip'
 alias ssharch='ssh viranch@192.168.56.101'
+alias lc='l *.cpp|awk "{ print \$9 }"|sed "s/\.cpp//g"'
 alias ksr='source $HOME/kde/bashrc; cs'
 alias qm='qmake -spec mac-g++'
 #x=$(cat /proc/cpuinfo|grep processor|wc -l)
