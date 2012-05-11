@@ -30,7 +30,7 @@ function myroutes() { fbchat $1 && irc $1 }
 
 # script aliases
 alias p=python
-SCRIPTS='$HOME/playground/scripts'
+SCRIPTS="$HOME/playground/scripts"
 alias imdb='p $SCRIPTS/imdb.py'
 alias usage='sh $SCRIPTS/broadband_usage.sh'
 alias skins-dl='p $SCRIPTS/../stuff/skins.be/skins-dl.py'

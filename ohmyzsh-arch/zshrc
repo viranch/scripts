@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-export ZSH=$HOME/playground/scripts/ohmyzsh-arch
+export ZSH=$SCRIPTS/ohmyzsh-arch
 
 # add a function path
 #fpath=($ZSH/functions $fpath)
@@ -26,17 +26,18 @@ compdef _which whose=which
 compdef _pacman p=pacman
 
 # script aliases
-alias imdb='python2 $HOME/playground/scripts/imdb.py'
-alias aurman='sh $HOME/playground/scripts/aurman.sh'
-alias trunkman='sh $HOME/playground/scripts/trunkman.sh'
-alias tt='vim $HOME/time_table'
-alias usage='sh $HOME/playground/scripts/broadband_usage.sh'
-alias skins-dl='python2 $HOME/playground/stuff/skins.be/skins-dl.py'
-alias chiface='sh $HOME/playground/scripts/change_iface.sh $HOME/Softwares/Arch/conky-arch2/'
-alias text='python2 $HOME/playground/scripts/way2sms.py 9374394249'
-alias paste='sh $HOME/playground/scripts/pastebin.sh post'
-alias getpaste='sh $HOME/playground/scripts/pastebin.sh get'
-alias webmail='python2 $HOME/playground/scripts/webmail.py viranch_mehta'
+alias p=python2
+SCRIPTS="$HOME/playground/scripts"
+alias imdb='python2 $SCRIPTS/imdb.py'
+alias aurman='sh $SCRIPTS/aurman.sh'
+alias trunkman='sh $SCRIPTS/trunkman.sh'
+alias usage='sh $SCRIPTS/broadband_usage.sh'
+alias skins-dl='python2 $SCRIPTS/../stuff/skins.be/skins-dl.py'
+alias chiface='sh $SCRIPTS/change_iface.sh $HOME/Softwares/Arch/conky-arch2/'
+alias text='python2 $SCRIPTS/way2sms.py 9374394249'
+alias paste='sh $SCRIPTS/pastebin.sh post'
+alias getpaste='sh $SCRIPTS/pastebin.sh get'
+alias webmail='python2 $SCRIPTS/webmail.py viranch_mehta'
 alias fbchat='sudo route add chat.facebook.com gw'
 alias irc='sudo route add chat.freenode.net gw'
 function myroutes() { fbchat $1 && irc $1 }
