@@ -10,8 +10,8 @@ import shutil
 import subprocess
 
 ROOT = '$HOME/Pictures/Wallpapers'
-DB = '$ROOT/Skins.be/'
-DB_SELECTED = '$ROOT/Selected/'
+DB = ROOT+'/Skins.be/'
+DB_SELECTED = ROOT+'/Selected/'
 
 WEB = 'http://www.skins.be/'
 RSS = 'http://www.skins.be/feeds/en/skins.xml'
