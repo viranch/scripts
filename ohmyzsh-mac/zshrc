@@ -25,14 +25,16 @@ x=4
 alias m='make -j$((x+1))'
 alias mi='sudo make install'
 compdef _sudo s=sudo
-
-# script aliases
-alias python2=python
-alias imdb='python2 $HOME/playground/scripts/imdb.py'
-alias usage='sh $HOME/playground/scripts/broadband_usage.sh'
-alias skins-dl='python2 $HOME/playground/stuff/skins.be/skins-dl.py'
-alias text='python2 $HOME/playground/scripts/way2sms.py 9374394249'
-alias webmail='python2 $HOME/playground/scripts/webmail.py viranch_mehta'
 alias fbchat='sudo route add chat.facebook.com gw'
 alias irc='sudo route add chat.freenode.net gw'
 function myroutes() { fbchat $1 && irc $1 }
+
+# script aliases
+alias p=python
+SCRIPTS='$HOME/playground/scripts'
+alias imdb='p $SCRIPTS/imdb.py'
+alias usage='sh $SCRIPTS/broadband_usage.sh'
+alias skins-dl='p $SCRIPTS/../stuff/skins.be/skins-dl.py'
+alias text='p $SCRIPTS/way2sms.py 9374394249'
+alias webmail='p $SCRIPTS/webmail.py viranch_mehta'
+alias utube-'p $SCRIPTS/youtube-dl.py -ct'
