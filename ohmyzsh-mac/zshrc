@@ -24,7 +24,6 @@ alias qm='qmake -spec mac-g++'
 x=4
 alias m='make -j$((x+1))'
 alias mi='sudo make install'
-compdef _sudo s=sudo
 alias fbchat='sudo route add chat.facebook.com gw'
 alias irc='sudo route add chat.freenode.net gw'
 function myroutes() { fbchat $1 && irc $1 }

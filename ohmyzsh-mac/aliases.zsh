@@ -1,5 +1,6 @@
 # Super user
 alias s='sudo'
+compdef _sudo s=sudo
 
 # Show history
 alias history='fc -l 1'

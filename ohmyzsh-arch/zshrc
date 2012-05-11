@@ -24,7 +24,6 @@ alias m='make -j$((x+1))'
 alias mi='sudo make install'
 compdef _which whose=which
 compdef _pacman p=pacman
-compdef _sudo _=sudo
 
 # script aliases
 alias imdb='python2 $HOME/playground/scripts/imdb.py'
