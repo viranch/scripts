@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-export ZSH=$SCRIPTS/ohmyzsh-arch
+export ZSH=$HOME/playground/scripts/ohmyzsh-arch
 
 # add a function path
 #fpath=($ZSH/functions $fpath)
