@@ -16,5 +16,4 @@ alias x=extract
 # Command aliases
 alias wget='wget --read-timeout=10'
 alias swget='swget --read-timeout=10'
-alias utube='youtube-dl -ct'
 alias v='vim'
