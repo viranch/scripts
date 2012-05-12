@@ -9,7 +9,8 @@ import os
 import shutil
 import subprocess
 
-ROOT = '$HOME/Pictures/Wallpapers'
+HOME = os.getenv("HOME")
+ROOT = HOME+'/Pictures/Wallpapers'
 DB = ROOT+'/Skins.be/'
 DB_SELECTED = ROOT+'/Selected/'
 
@@ -18,7 +19,7 @@ RSS = 'http://www.skins.be/feeds/en/skins.xml'
 PROXY = 0
 RES = '-1920x1200-'
 url_list = []
-CONF = os.getenv("HOME")+'/.skins.conf'
+CONF = HOME+'/.skins.conf'
 
 def proxify(link):
     if PROXY:
