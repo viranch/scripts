@@ -20,8 +20,8 @@ alias atm='cat ~/Softwares/card | xclip'
 
 # Dev aliases
 alias ksr='source /home/viranch/kde/bashrc; cs'
-alias h='vim `echo $_|sed "s/\./cpp/.h/g"`'
-alias c='vim `echo $_|sed "s/\./h/.cpp/g"`'
+alias h='vim `echo $_|sed "s/\.cpp/.h/g"`'
+alias c='vim `echo $_|sed "s/\.h/.cpp/g"`'
 alias lc='l *.cpp|awk "{ print \$9 }"|sed "s/\.cpp//g"'
 x=$(cat /proc/cpuinfo|grep processor|wc -l)
 alias m='make -j$((x+1))'
