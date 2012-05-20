@@ -21,6 +21,12 @@ RES = '-1920x1200-'
 url_list = []
 CONF = HOME+'/.skins.conf'
 
+def ask(question):
+    while True:
+        ch = raw_input(question)
+        if ch=='n' or ch=='N': return false
+        if ch=='': return true
+
 def proxify(link):
     if PROXY:
         link = link.replace('http:/', 'https://www.suresome.com/proxy/nph-secure/00A/http')
@@ -51,7 +57,7 @@ def get_url(page):
 
 def get_updates(page=1):
     last = read_last()
-    print ' Page' + str(page) + ',',
+    print 'Page ' + str(page) + ',',
     sys.stdout.flush()
     f = urllib2.urlopen(proxify(WEB+'/page/'+str(page)))
     s = f.read()
@@ -102,8 +108,7 @@ def copy_to_database(fname, move=False):
         return None
 
     if os.access(DB + dirname + fname, os.F_OK):
-        ch = raw_input(' Skins.be/' + dirname + fname + ' exists. Overwrite? [Y/n] ')
-        if ch=='n' or ch=='N':
+        if not ask(' Skins.be/' + dirname + fname + ' exists. Overwrite? [Y/n] '):
             return None
     
     if move:
@@ -124,7 +129,7 @@ def main():
             rss = False
             url_list.append(get_url(arg))
     if rss:
-        print 'Looking up for new wallpapers ... ',
+        print 'Looking up for new wallpapers...',
         sys.stdout.flush()
         get_updates()
         print len(url_list), 'found.'
@@ -142,7 +147,7 @@ def main():
     if len(url_list)>0 and not print_uris:
         if rss:
             write_last(url_list[0])
-        ch = raw_input('Copy to the database? ')
+        raw_input('Copy to the database? ')
         selected=[]
         for url in url_list:
             try:
@@ -152,7 +157,8 @@ def main():
                 copy_to_database(fname, not isSelected)
             except IOError as error:
                 print str(error)
-        if len(selected)>0: ch = raw_input('\nCopy to the selected wallpapers? ')
+        if len(selected)>0:
+            raw_input('\nCopy to the selected wallpapers? ')
         for url in selected:
             try:
                 copy_to_selected(url.split('/')[-1])
