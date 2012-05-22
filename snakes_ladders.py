@@ -54,7 +54,9 @@ class SnakesLadders:
 class World:
     def __init__(self):
         self.pos = [0, 0]
-        self.names = ["PlayerA", "PlayerB"]
+        self.names = []
+        self.names.append(raw_input("Enter first player's name: "))
+        self.names.append(raw_input("Enter another player's name: "))
         self.snl = SnakesLadders()
 
     def roll_dice(self):
