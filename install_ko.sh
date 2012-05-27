@@ -1,4 +1,4 @@
-# script to install a command line utility to
+# script to install a command line utility for MacOS to
 # open specified file with associated application
 # Install: sh install_ko.sh
 # Use the utility: ko ~/some/file.avi
