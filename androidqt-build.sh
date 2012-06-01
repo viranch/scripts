@@ -1,6 +1,6 @@
 NTAS="$HOME/playground/necessitas"
 export ANDROID_NDK_HOST="darwin-x86"
-export ANDOIRD_NDK_PLATFORM="android-9"
+export ANDROID_NDK_PLATFORM="android-9"
 export ANDROID_NDK_ROOT="$NTAS/android-ndk-r6b"
 export ANDROID_NDK_TOOLCHAIN_PREFIX="arm-linux-androideabi"
 export ANDROID_NDK_TOOLCHAIN_VERSION="4.4.3"
@@ -11,7 +11,9 @@ export PATH="$QTDIR/bin":$PATH
 qmake "$1" -r -spec android-g++
 make -j5
 make INSTALL_ROOT="$(dirname "$1")/android" install
-cd $(dirname "$1")
+$ANDROID_NDK_ROOT/toolchains/$ANDROID_NDK_TOOLCHAIN_PREFIX-$ANDROID_NDK_TOOLCHAIN_VERSION/prebuilt/$ANDROID_NDK_HOST/bin/$ANDROID_NDK_TOOLS_PREFIX-strip "$(dirname "$1")/android/libs/armeabi-v7a/*.so"
+
+cd $(dirname "$1")/android
 ant clean release
 cd bin/
 jarsigner -verbose -keystore viranch.keystore *.apk viranch
