@@ -12,4 +12,9 @@ qmake "$1" -r -spec android-g++
 make -j5
 make INSTALL_ROOT="$(dirname "$1")/android" install
 cd $(dirname "$1")
-ant clean debug
+ant clean release
+cd bin/
+jarsigner -verbose -keystore viranch.keystore *.apk viranch
+PKG_NAME=$(basename `ls *.apk` .apk)
+APK=$(echo $PKGNAME | sed 's/-unsigned//g').apk
+$NTAS/android-sdk/tools/zipalign 4 *.apk $APK
