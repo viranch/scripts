@@ -30,7 +30,6 @@ compdef _which whose=which
 compdef _pacman p=pacman
 
 # script aliases
-alias p=python2
 SCRIPTS="$HOME/playground/scripts"
 alias imdb='python2 $SCRIPTS/imdb.py'
 alias aurman='sh $SCRIPTS/aurman.sh'
