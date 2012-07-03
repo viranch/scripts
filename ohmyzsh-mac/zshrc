@@ -12,8 +12,8 @@ for config_file ($ZSH/../ohmyzsh-common/*.zsh $ZSH/*.zsh) source $config_file
 export EDITOR=vim
 
 # my aliases
-alias cyberoam='curl -s http://10.100.56.55:8090/httpclient.html -d "mode=191&username=200801001&password=200801001" | grep "<message>.*</message>" -o | sed "s/<\/*message>//g"'
-alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/Connect$/✘ Down/g'"
+alias cyberoam='curl -s http://172.16.1.1/24online/servlet/CyberoamHTTPClient -d "mode=191&username=Mehta&password=1234" | grep "message.*&liver" -o | sed "s/message=//g" | sed "s/&liver//g" | sed "s/+/ /g"'
+alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/^.*Connect$/✘ Down/g'"
 alias sysmon='echo "USER       PID %CPU %MEM" && ps aux | sort -nrk3 | head'
 alias atm='cat ~/Softwares/card | xclip'
 alias vm='/Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app/Contents/MacOS/VirtualBoxVM --comment Arch Box --startvm 114af148-ccf3-4b95-ab23-8a5583e4e9b3 --no-startvm-errormsgbox --fullscreen &'
