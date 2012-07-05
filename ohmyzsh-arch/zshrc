@@ -16,7 +16,8 @@ alias cyberoam='curl -s http://172.16.1.1/24online/servlet/CyberoamHTTPClient -d
 alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/Connect$/✘ Down/g'"
 alias sl='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
 alias slp='slock &; sl'
-alias atm='cat ~/Softwares/card | xclip'
+alias clip='xclip -selection c'
+alias atm='cat ~/Softwares/card | clip'
 
 # Dev aliases
 alias ksr='source /home/viranch/kde/bashrc; cs'
