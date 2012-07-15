@@ -23,9 +23,9 @@ fi
 setopt prompt_subst
 
 # Load the theme
-PROMPT='%{$fg_bold[green]%}%n@mac%{$reset_color%} %{$fg_bold[cyan]%}%c%{$reset_color%} %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}% » '
+PROMPT='%F{208}%n%f%{$fg[white]%}@%F{039}mac%f%{$reset_color%} %{$fg[green]%}%c%{$reset_color%} %{$fg[cyan]%}$(git_prompt_info)%{$reset_color%}% » '
 ZSH_THEME_GIT_PROMPT_PREFIX="<%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%} %{$fg[yellow]%}✗%{$fg[green]%}> %{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}> "
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%} %{$fg[yellow]%}✗%{$fg[cyan]%}> %{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%}> "
 
