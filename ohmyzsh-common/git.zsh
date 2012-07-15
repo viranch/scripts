@@ -51,23 +51,48 @@ function current_branch() {
 
 alias g='git'
 compdef _git g=git
+
 alias gi='git init'
 compdef _git gi=git-init
+
+alias ga='git add'
+compdef _git ga=git-add
+
 alias gcl='git clone'
 compdef _git gcl=git-clone
+
 alias gco='git checkout'
 compdef _git gco=git-checkout
+
 alias gst='git status'
 compdef _git gst=git-status
+
 alias gl='git pull'
 compdef _git gll=git-pull
+
 alias gd='git diff'
 compdef _git gd=git-diff
-alias gcm='git commit'
-compdef _git gcm=git-commit
+
 alias gc='git commit -am'
 compdef _git gc=git-commit
+
+alias gcm='git commit -m'
+compdef _git gcm=git-commit
+
+alias gca='git commit -a'
+compdef _git gca=git-commit
+
 alias gp='git push'
 compdef _git gp=git-push
+
 alias glg='git log --max-count=5'
 compdef _git glg=git-log
+
+alias ginf='git shortlog -sn'
+compdef _git ginf=git-shortlog
+
+alias gss='git status -s'
+compdef _git gss=git-status
+
+alias grh='git reset --hard'
+compdef _git grh=git-reset
