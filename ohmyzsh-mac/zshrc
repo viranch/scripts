@@ -7,6 +7,13 @@ export ZSH=$HOME/playground/scripts/ohmyzsh-mac
 # Load all of the config files in ~/oh-my-zsh that end in .zsh
 for config_file ($ZSH/../ohmyzsh-common/*.zsh $ZSH/*.zsh) source $config_file
 
+# set tab title to cwd
+precmd () {
+    tab_label=${PWD/${HOME}/\~} # use 'relative' path
+    echo -ne "\e]2;${tab_label}\a" # set window title to full string
+    echo -ne "\e]1;${tab_label: -24}\a" # set tab title to rightmost 24 characters
+}
+
 # Customize to your needs...
 #export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl
 export EDITOR=vim
