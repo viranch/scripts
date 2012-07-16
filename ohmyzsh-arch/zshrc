@@ -18,6 +18,7 @@ alias sl='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/
 alias slp='slock &; sl'
 alias clip='xclip -selection c'
 alias atm='cat ~/Softwares/card | clip'
+alias sp="curl -s -F 'sprunge=<-' http://sprunge.us | xclip -selection c && xclip -o -selection c"
 
 # Dev aliases
 alias ksr='source /home/viranch/kde/bashrc; cs'
