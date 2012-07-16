@@ -17,7 +17,7 @@ function installpkg()
         dep=$(echo $dep|sed 's/>.*//g')
         a=$(pacman -Ss "^$dep$")
         if [ -z "$a" ]; then
-            $0 -S $dep
+            bash $0 -S $dep
         fi
     done
 
