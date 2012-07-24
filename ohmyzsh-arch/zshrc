@@ -18,13 +18,14 @@ alias sl='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/
 alias slp='slock &; sl'
 alias clip='xclip -selection c'
 alias atm='cat ~/Softwares/card | clip'
+alias sp="curl -s -F 'sprunge=<-' http://sprunge.us | xclip -selection c && xclip -o -selection c"
 
 # Dev aliases
 alias ksr='source /home/viranch/kde/bashrc; cs'
 alias h='vim `echo $_|sed "s/\.cpp/.h/g"`'
 alias c='vim `echo $_|sed "s/\.h/.cpp/g"`'
 alias lc='l *.cpp|awk "{ print \$9 }"|sed "s/\.cpp//g"'
-x=$(cat /proc/cpuinfo|grep processor|wc -l)
+x=$(cat /proc/cpuinfo|grep -c processor)
 alias m='make -j$((x+1))'
 alias mi='sudo make install'
 compdef _which whose=which
