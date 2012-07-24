@@ -4,28 +4,32 @@
 import urllib
 import time
 
-#student ID without '@d-iict.org'
-username = '200801001'
-
-#cyberoam password
-password = '200801001'
+username = 'Mehta'
+password = '1234'
 
 #relogin time period in minutes
-tm = 60
+tm = 10
 
-#print various messages?
-SILENT = False
+url = "http://172.16.1.1/24online/servlet/CyberoamHTTPClient"
 
-while True:
-    try:
-        f = urllib.urlopen('http://10.100.56.55:8090/httpclient.html','mode=191&username='+username+'&password='+password)
-        s = f.read()
-        f.close()
-        if not SILENT:
-            s=s.split('message')[1][1:-2]
-            print time.strftime('--%Y-%m-%d %I:%M %p--'), s+'.'
+def talk(mode):
+    f = urllib.urlopen(url, 'mode='+mode+'&username='+username+'&password='+password)
+    s = f.read()
+    f.close()
+    s = s.split('message=')[1].split('&')[0].replace('+',' ')
+    print s+'.'
+
+def login():
+    print 'Logging in...',
+    talk('191')
+
+def logout():
+    print '\nLogging out...',
+    talk('193')
+
+try:
+    while True:
+        login()
         time.sleep (tm*60)
-    except IOError, error:
-        if not SILENT:
-            print time.strftime('--%Y-%m-%d %I:%M %p--'), str(error)
-
+except KeyboardInterrupt:
+    logout()
