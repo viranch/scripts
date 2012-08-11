@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # Author: Viranch Mehta <viranch.mehta@gmail.com>
 
+import sys
 import urllib
 import time
 
@@ -21,10 +22,12 @@ def talk(mode):
 
 def login():
     print 'Logging in...',
+    sys.stdout.flush()
     talk('191')
 
 def logout():
     print '\nLogging out...',
+    sys.stdout.flush()
     talk('193')
 
 try:
