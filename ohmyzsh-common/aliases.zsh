@@ -17,7 +17,7 @@ alias swget='swget --read-timeout=10'
 alias wv='sudo wvdial'
 alias d='DISPLAY=:0'
 alias v='vim'
-alias sp="curl -s -F 'sprunge=<-' http://sprunge.us"
+alias sp="curl -s -F 'sprunge=<-' http://sprunge.us/"
 
 # Dev aliases
 alias h='vim `echo $_|sed "s/\.cpp/.h/g"`'
