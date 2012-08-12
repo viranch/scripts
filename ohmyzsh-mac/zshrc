@@ -1,5 +1,3 @@
-export TERM=xterm-256color
-
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/playground/scripts/ohmyzsh-mac
 
@@ -16,27 +14,10 @@ export EDITOR=vim
 # my aliases
 alias cyberoam='curl -s http://172.16.1.1/24online/servlet/CyberoamHTTPClient -d "mode=191&username=Mehta&password=1234" | grep "message.*&liver" -o | sed "s/message=//g" | sed "s/&liver//g" | sed "s/+/ /g"'
 alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/^.*Connect$/✘ Down/g'"
-alias sysmon='echo "USER       PID %CPU %MEM" && ps aux | sort -nrk3 | head'
 alias atm='cat ~/Softwares/card | xclip'
 alias vm='/Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app/Contents/MacOS/VirtualBoxVM --comment Arch Box --startvm 114af148-ccf3-4b95-ab23-8a5583e4e9b3 --no-startvm-errormsgbox --fullscreen &'
 alias ssharch='ssh viranch@192.168.56.101'
-alias lc='l *.cpp|awk "{ print \$9 }"|sed "s/\.cpp//g"'
-alias ksr='source $HOME/kde/bashrc; cs'
-alias qm='qmake -spec macx-g++'
 #x=$(cat /proc/cpuinfo|grep processor|wc -l)
 x=4
-alias m='make -j$((x+1))'
-alias mi='sudo make install'
-alias fbchat='sudo route add chat.facebook.com gw'
-alias irc='sudo route add chat.freenode.net gw'
-function myroutes() { fbchat $1 && irc $1 }
 
-# script aliases
-alias p=python
-SCRIPTS="$HOME/playground/scripts"
-alias imdb='p $SCRIPTS/imdb.py'
-alias usage='sh $SCRIPTS/broadband_usage.sh'
-alias skins-dl='p $SCRIPTS/skins-dl.py'
-alias text='p $SCRIPTS/way2sms.py 9374394249'
-alias webmail='p $SCRIPTS/webmail.py viranch_mehta'
-alias utube='p $SCRIPTS/youtube-dl.py -ct'
+export TERM=xterm-256color

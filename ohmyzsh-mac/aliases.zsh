@@ -1,19 +1,10 @@
-# Super user
-alias s='sudo'
-compdef _sudo s=sudo
+alias qm='qmake -spec macx-g++'
 
-# Show history
-alias history='fc -l 1'
-
-# List direcory contents
-alias ll='ls -lah'
-alias l='ls -lh'
-
-alias afind='ack-grep -il'
-
-alias x=extract
-
-# Command aliases
-alias wget='wget --read-timeout=10'
-alias swget='swget --read-timeout=10'
-alias v='vim'
+# script aliases
+alias p=python
+SCRIPTS="$HOME/playground/scripts"
+alias imdb='p $SCRIPTS/imdb.py'
+alias usage='sh $SCRIPTS/broadband_usage.sh'
+alias skins-dl='p $SCRIPTS/skins-dl.py'
+alias text='p $SCRIPTS/way2sms.py 9374394249'
+alias utube='p $SCRIPTS/youtube-dl.py -ct'

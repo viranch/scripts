@@ -17,32 +17,5 @@ alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep
 alias sl='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
 alias slp='slock &; sl'
 alias clip='xclip -selection c'
-alias atm='cat ~/Softwares/card | clip'
-alias sp="curl -s -F 'sprunge=<-' http://sprunge.us | xclip -selection c && xclip -o -selection c"
-
-# Dev aliases
-alias ksr='source /home/viranch/kde/bashrc; cs'
-alias h='vim `echo $_|sed "s/\.cpp/.h/g"`'
-alias c='vim `echo $_|sed "s/\.h/.cpp/g"`'
-alias lc='l *.cpp|awk "{ print \$9 }"|sed "s/\.cpp//g"'
+alias ksr='source $HOME/kde/bashrc; cs'
 x=$(cat /proc/cpuinfo|grep -c processor)
-alias m='make -j$((x+1))'
-alias mi='sudo make install'
-compdef _which whose=which
-compdef _pacman p=pacman
-
-# script aliases
-SCRIPTS="$HOME/playground/scripts"
-alias imdb='python2 $SCRIPTS/imdb.py'
-alias aurman='sh $SCRIPTS/aurman.sh'
-alias trunkman='sh $SCRIPTS/trunkman.sh'
-alias usage='sh $SCRIPTS/broadband_usage.sh'
-alias skins-dl='python2 $SCRIPTS/../stuff/skins.be/skins-dl.py'
-alias chiface='sh $SCRIPTS/change_iface.sh $HOME/Softwares/Arch/conky-arch2/'
-alias text='python2 $SCRIPTS/way2sms.py 9374394249'
-alias paste='sh $SCRIPTS/pastebin.sh post'
-alias getpaste='sh $SCRIPTS/pastebin.sh get'
-alias webmail='python2 $SCRIPTS/webmail.py viranch_mehta'
-alias fbchat='sudo route add chat.facebook.com gw'
-alias irc='sudo route add chat.freenode.net gw'
-function myroutes() { fbchat $1 && irc $1 }
