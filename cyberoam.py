@@ -4,9 +4,10 @@
 import sys
 import urllib
 import time
+import getpass
 
 username = 'Mehta'
-password = '1234'
+password = getpass.getpass()
 
 #relogin time period in minutes
 tm = 10
