@@ -52,7 +52,7 @@ function removepkg()
     for dep in ${depends[@]} ${makedepends[@]}; do
         a=$(pacman -Ss "^$dep$")
         if [ -z "$a" ]; then
-            $0 -R $dep
+            sh $0 -R $dep
         fi
     done
 
