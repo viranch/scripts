@@ -14,6 +14,8 @@ alias utube='youtube-dl -ct'
 alias start='sudo rc.d start'
 alias stop='sudo rc.d stop'
 alias restart='sudo rc. restart'
+alias monitor='xranr --output VGA1'
+alias onmon='xrandr --output VGA1 --auto --right-of LVDS1'
 alias offmon='xrandr --output VGA1 --off'
 
 # KDE aliases
