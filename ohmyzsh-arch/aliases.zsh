@@ -14,6 +14,7 @@ alias utube='youtube-dl -ct'
 alias start='sudo rc.d start'
 alias stop='sudo rc.d stop'
 alias restart='sudo rc. restart'
+alias offmon='xrandr --output VGA1 --off'
 
 # KDE aliases
 alias killkde="kill -TERM `\ps aux|grep startkde$|awk '{print $2}'`"
