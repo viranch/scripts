@@ -13,8 +13,6 @@ export EDITOR=vim
 
 # my aliases
 alias cyberoam='curl -s http://172.16.1.1/24online/servlet/CyberoamHTTPClient -d "mode=191&username=Mehta&password=1234" | grep "message.*&liver" -o | sed "s/message=//g" | sed "s/&liver//g" | sed "s/+/ /g"'
-alias tata='curl https://loginban.tataindicombroadband.in:8443/user/refresh/home -d "user=10953169&password=es0r1pmo&username=10953169@wifi.vsnl.net&pass=es0r1pmo" > /dev/null'
-alias offtata='curl https://loginban.tataindicombroadband.in:8443/accountLogoff/home\?confirmed\=true > /dev/null'
 alias bb="curl -s http://192.168.1.1/webconfig/wan/wan.html -u admin:4129 | grep \"connect\|disconnect\" -iwo | head -n1 | sed 's/Disconnect/✔ Up/g' | sed 's/^.*Connect$/✘ Down/g'"
 alias vm='/Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app/Contents/MacOS/VirtualBoxVM --comment Arch Box --startvm 114af148-ccf3-4b95-ab23-8a5583e4e9b3 --no-startvm-errormsgbox --fullscreen &'
 alias ssharch='ssh viranch@192.168.56.101'
