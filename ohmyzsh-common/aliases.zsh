@@ -15,6 +15,7 @@ alias x=extract
 alias wget='wget --read-timeout=10'
 alias swget='swget --read-timeout=10'
 alias wv='sudo wvdial'
+alias utube='youtube-dl -ct'
 alias d='DISPLAY=:0'
 alias v='vim'
 alias sp="curl -s -F 'sprunge=<-' http://sprunge.us/"
