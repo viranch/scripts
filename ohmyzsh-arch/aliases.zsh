@@ -16,6 +16,8 @@ alias restart='sudo rc.d restart'
 alias monitor='xranr --output VGA1'
 alias onmon='xrandr --output VGA1 --auto --right-of LVDS1'
 alias offmon='xrandr --output VGA1 --off'
+alias td='transmission-daemon'
+alias ns='netstat -ntlp'
 
 # KDE aliases
 alias killkde="kill -TERM `\ps aux|grep startkde$|awk '{print $2}'`"
