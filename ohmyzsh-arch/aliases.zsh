@@ -20,7 +20,7 @@ alias td='transmission-daemon'
 alias kt='killall -INT transmission-daemon'
 alias ns='netstat -ntlp'
 alias h='start httpd'
-alias sh='stop httpd'
+alias kh='stop httpd'
 
 # KDE aliases
 alias killkde="kill -TERM `\ps aux|grep startkde$|awk '{print $2}'`"
