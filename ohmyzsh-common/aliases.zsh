@@ -19,6 +19,8 @@ alias utube='youtube-dl -ct'
 alias d='DISPLAY=:0'
 alias v='vim'
 alias sp="curl -s -F 'sprunge=<-' http://sprunge.us/"
+alias int='killall -INT'
+alias kint='kill -INT'
 alias cont='kill -CONT'
 alias term='kill -TERM'
 alias kll='kill -KILL'
