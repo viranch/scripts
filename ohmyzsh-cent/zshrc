@@ -1,0 +1,15 @@
+# Path to your oh-my-zsh configuration.
+export ZSH=$HOME/playground/scripts/ohmyzsh-arch
+
+# add a function path
+#fpath=($ZSH/functions $fpath)
+
+# Load all of the config files in ~/oh-my-zsh that end in .zsh
+for config_file ($ZSH/../ohmyzsh-common/*.zsh $ZSH/*.zsh) source $config_file
+
+# Customize to your needs...
+#export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl
+export EDITOR=vim
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
