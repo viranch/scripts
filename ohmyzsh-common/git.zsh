@@ -44,6 +44,12 @@ git_prompt_status() {
 }
 
 # Git aliases
+function git_work() {
+  git config user.email "viranch.m@directi.com"
+}
+
+alias gw='git_work'
+
 function current_branch() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   echo ${ref#refs/heads/}
