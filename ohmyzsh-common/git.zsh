@@ -47,8 +47,21 @@ git_prompt_status() {
 function git_work() {
   git config user.email "viranch.m@directi.com"
 }
-
 alias gw='git_work'
+
+function gwc() {
+    against="$2"
+    if [[ $against == "" ]]; then 
+        let against="1"
+    fi
+    this_commit_hash=`echo $1 | cut -c1-7`
+    against_commit_hash=`git log --oneline | grep $this_commit_hash -A $against | tail -n1 | cut -d" " -f1`
+    echo git diff $against_commit_hash..$this_commit_hash
+    git diff $against_commit_hash $1
+    echo -e "\033[32m"
+    git log $1 | head -n5
+    tput sgr0
+}
 
 function current_branch() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
