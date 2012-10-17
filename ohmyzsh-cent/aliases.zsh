@@ -8,6 +8,7 @@ function serv() { sudo /sbin/service $1 $2; }
 function start() { sudo /sbin/service $1 start; }
 function stop() { sudo /sbin/service $1 stop; }
 function restart() { sudo /sbin/service $1 restart; }
+alias corn='sudo kill -INT `ps aux|grep "^root.*unicorn master"|awk -F" " "{print \\$2}"` && rvmsudo unicorn -p 80 -D config.ru start'
 
 # Pacman aliases
 alias y=yum
