@@ -24,7 +24,6 @@ alias kint='kill -INT'
 alias cont='kill -CONT'
 alias term='kill -TERM'
 alias kll='kill -KILL'
-alias aws='ssh -i ~/.ssh/viranch.pem arch@ec2-184-169-223-159.us-west-1.compute.amazonaws.com'
 alias sv='SUDO_EDITOR=vim sudoedit' #sudo vim
 alias pg='ps aux | grep'
 
