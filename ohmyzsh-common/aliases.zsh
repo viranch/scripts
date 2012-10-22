@@ -26,6 +26,7 @@ alias term='kill -TERM'
 alias kll='kill -KILL'
 alias sv='SUDO_EDITOR=vim sudoedit' #sudo vim
 alias pg='ps aux | grep'
+alias ss='ssh'
 
 # Dev aliases
 alias h='vim `echo $_|sed "s/\.cpp/.h/g"`'
