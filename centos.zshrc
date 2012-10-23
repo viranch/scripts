@@ -15,15 +15,15 @@ alias y=yum
 compdef _yum y=yum
 alias Y='sudo yum -y'
 alias yi='Y install'
-#alias up='P -Syu'
 alias ys='y search'
 yqs() { yum list installed "*$1*" }
 alias rql='rpm -ql'
 alias yif='y info'
 alias yr='Y remove'
-#alias pqo='pq -o'
-#whose () { pqo -q $(which $1) }
-#compdef _which whose=which
+alias rqo='rpm -qf'
+whose() { rqo `which $1` }
+compdef _which whose=which
+#alias up='P -Syu'
 
 function pb() {
     cat > /tmp/pb.py << EOF
