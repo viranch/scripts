@@ -14,6 +14,7 @@ alias x=extract
 # My useful aliases
 alias wget='wget --read-timeout=10'
 alias swget='swget --read-timeout=10'
+alias axel='axel -a'
 alias wv='sudo wvdial'
 alias utube='youtube-dl -ct'
 alias d='DISPLAY=:0'
