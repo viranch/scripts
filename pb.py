@@ -9,4 +9,12 @@ url = f.url
 f.close()
 
 print url
-subprocess.call(['xdg-open', url])
+try:
+    from PyQt4.QtCore import QUrl
+    from PyQt4.QtGui import QDesktopServices
+    QDesktopServices.openUrl(QUrl(url))
+except ImportError:
+    try:
+        subprocess.call(['xdg-open', url])
+    except OSError:
+        pass
