@@ -92,12 +92,20 @@ compdef _git gll=git-pull
 alias gd='git diff'
 compdef _git gd=git-diff
 
+# Commit all unstaged files
 alias gc='git commit -am'
 compdef _git gc=git-commit
 
+# Pull before committing for busy repos
+alias glc='git pull && git commit -am'
+compdef _git gc=git-commit
+
+# Commit only specifically staged files
 alias gcm='git commit -m'
 compdef _git gcm=git-commit
 
+# Commit all unstaged files but write
+# commit message in vim
 alias gca='git commit -a'
 compdef _git gca=git-commit
 
@@ -107,6 +115,7 @@ compdef _git gp=git-push
 alias glg='git log --max-count=5'
 compdef _git glg=git-log
 
+# Show no. of commits by each author
 alias ginf='git shortlog -sn'
 compdef _git ginf=git-shortlog
 
