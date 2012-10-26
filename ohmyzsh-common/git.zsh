@@ -104,6 +104,10 @@ compdef _git gc=git-commit
 alias gcm='git commit -m'
 compdef _git gcm=git-commit
 
+# Pull before committing the specific staged files
+alias glcm='git pull && git commit -m'
+compdef _git gcm=git-commit
+
 # Commit all unstaged files but write
 # commit message in vim
 alias gca='git commit -a'
