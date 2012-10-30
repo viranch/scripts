@@ -98,7 +98,10 @@ compdef _git gc=git-commit
 
 # Pull before committing for busy repos
 alias glc='git pull && git commit -am'
-compdef _git gc=git-commit
+compdef _git glc=git-commit
+
+# Pull -> Commit -> Push
+glcp() { git pull && git commit -am "$1" && git push }
 
 # Commit only specifically staged files
 alias gcm='git commit -m'
@@ -106,7 +109,10 @@ compdef _git gcm=git-commit
 
 # Pull before committing the specific staged files
 alias glcm='git pull && git commit -m'
-compdef _git gcm=git-commit
+compdef _git glcm=git-commit
+
+# Pull -> Commit staged -> Push
+glcmp() { git pull && git commit -m "$1" && git push }
 
 # Commit all unstaged files but write
 # commit message in vim
