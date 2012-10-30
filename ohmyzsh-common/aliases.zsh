@@ -29,7 +29,6 @@ alias sv='SUDO_EDITOR=vim sudoedit' #sudo vim
 alias pg='ps aux | grep'
 alias ss='ssh'
 aws='ec2-184-169-223-159.us-west-1.compute.amazonaws.com'
-line() { head -n$1 $2 | tail -n1 }
 
 # Dev aliases
 alias h='vim `echo $_|sed "s/\.cpp/.h/g"`'
