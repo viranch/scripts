@@ -30,6 +30,11 @@ alias pg='ps aux | grep'
 alias ss='ssh'
 aws='ec2-184-169-223-159.us-west-1.compute.amazonaws.com'
 
+function chpwd() { 
+  emulate -L zsh
+  /bin/ls
+}
+
 # Dev aliases
 alias h='vim `echo $_|sed "s/\.cpp/.h/g"`'
 alias c='vim `echo $_|sed "s/\.h/.cpp/g"`'
