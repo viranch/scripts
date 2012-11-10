@@ -15,7 +15,7 @@ def login(user, passwd):
     f = opener.open('http://ontextme.com/exchange/ajax/auth/login/', 'mobile='+user+'&password='+passwd)
     s = f.read()
     f.close()
-    return 'success' in s
+    return s
 
 def exchange(s):
     ex = {}
@@ -49,12 +49,12 @@ text = ' '.join(sys.argv[3:])
 
 print 'Logging in...',
 sys.stdout.flush()
-if login(sender, password):
-    print 'done'
+s = login(sender, password)
+print s
+if 'success' in s:
     print 'Sending text...',
     sys.stdout.flush()
     s = send(receiver, text)
     print s
 else:
-    print 'Invalid username/password'
     sys.exit(2)
