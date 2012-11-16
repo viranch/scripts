@@ -8,7 +8,7 @@ function installpkg()
 
     echo ":: Downloading package file for $pkg"
     cd /tmp
-    wget -q http://aur.archlinux.org/packages/$pkg/$pkg.tar.gz -O - | tar zx
+    wget -q http://aur.archlinux.org/packages/tr/$pkg/$pkg.tar.gz -O - | tar zx
     source $pkg/PKGBUILD
     echo ":: Installing missing dependencies"
     echo "==> Build deps: " ${makedepends[@]}
