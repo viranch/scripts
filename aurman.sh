@@ -1,14 +1,21 @@
 #!/bin/bash
 
-root="/home/viranch/Softwares/Arch/AUR"
+root="$HOME/Softwares/Arch/AUR"
+mkdir -p $root
 
 function installpkg()
 {
     pkg=$1
 
+    fakeroot=$(which fakeroot)
+    if [ -z "$fakeroot" ]; then
+        echo ":: Installing fakeroot"
+        sudo pacman -S fakeroot
+    fi
+
     echo ":: Downloading package file for $pkg"
     cd /tmp
-    wget -q http://aur.archlinux.org/packages/tr/$pkg/$pkg.tar.gz -O - | tar zx
+    wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
     source $pkg/PKGBUILD
     echo ":: Installing missing dependencies"
     echo "==> Build deps: " ${makedepends[@]}
