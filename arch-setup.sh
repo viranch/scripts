@@ -1,41 +1,22 @@
 #!/bin/bash
 
-# Usage: --help
-if [ $# -gt 0 ]; then
-	if [ $1 = "--help" ]; then
-		cat << EOF
-usage: $0 [packages_backup_directory]
-EOF
-	exit 0
-	fi
-fi
-
 # Backup pacman cache
 alias pacman='pacman --noconfirm --needed'
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-if [ $# -eq 1 ]; then
-	echo "Server = $1" > /etc/pacman.d/mirrorlist
-fi
-echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
-
-# Initially force pacman to refresh the package lists
-echo ":: Updating base system first"
-dhcpcd
-pacman -Syyu
-pacman -Su
-echo ":: Update complete."
-echo
+echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
 # Users
+echo ":: Installing zsh"
+pacman -S zsh
 echo ":: Configure users"
 echo
 echo -n "Enter new username: "
 read username
-useradd -m -g users -G audio,lp,optical,storage,video,wheel,games,power -s /bin/bash $username
+useradd -m -g users -s /bin/zsh $username
 passwd $username
 pacman -S vim sudo
 export EDITOR=vim
-sed "s/^root/$username/g" /etc/sudoers -i
+sed -i "s/^root/$username/g" /etc/sudoers
 chmod 0440 /etc/sudoers
 echo ":: Configuring users complete."
 echo
@@ -51,27 +32,27 @@ if [ "$opt" = "2" ]; then
 elif [ "$opt" = "3" ]; then
 	pkg="xf86-video-ati"
 fi
-pacman -S pulseaudio libgl xorg-server mesa $pkg xf86-input-{keyboard,mouse,evdev,synaptics} dbus
+pacman -S alsa-utils xorg-{server,xinit,server-utils} mesa $pkg xf86-input-{evdev,synaptics}
 if [ "$opt" = "2" ]; then
 	nvidia-xconfig
-else
-	Xorg -configure
-	mv /root/xorg.conf.new /etc/X11/xorg.conf
 fi
 echo ":: Drivers installed"
 
 # KDE
+echo ":: Installing Fonts"
+pacman -S ttf-{bitstream-vera,dejavu,liberation}
 echo ":: Installing KDE"
-pacman -S ttf-bitstream-vera ttf-dejavu ttf-liberation kdebase-workspace kdebase-dolphin kdebase-kwrite libreoffice kdegraphics-{gwenview,okular} kdemultimedia-kmix kdeplasma-applets-networkmanagement kdebase-plasma kdeartwork-kscreensaver
-pacman -S zip unzip unrar kdeutils-ark flashplugin youtube-dl
-pacman -S ntfs-3g dosfstools
-pacman -S gtk-theme-swtich2 oxygen-gtk
+kdebase-{workspace,dolphin,kwrite,plasma} kdegraphics-{gwenview,okular,ksnapshot} kdemultimedia-kmix kdeplasma-applets-networkmanagement kdeartwork-kscreensaver kdeutils-ark oxygen-gtk{2,3}
+echo "::Installing misc tools"
+pacman -S zip unzip unrar flashplugin youtube-dl gtk-theme-swtich2
+pacman -S ntfs-3g dosfstools ntfsprogs
+pacman -S git openssh cmake python2-qt
 
 echo -n "Install quake-like terminal (Yakuake)? [Y/n] "
 read opt
 if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
 then
-    pacman -S yakuake zsh
+    pacman -S yakuake
 fi
 echo ""
 
@@ -103,7 +84,7 @@ echo -n "Install chat client for GMail, MSN, Y!, Facebook, etc (Kopete)? [Y/n] "
 read opt
 if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
 then
-    pacman -S kdenetwork-kopete
+    pacman -S kde-telepathy telepathy
 fi
 echo ""
 
@@ -112,14 +93,6 @@ read opt
 if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
 then
     pacman -S konversation
-fi
-echo ""
-
-echo -n "Install screenshot snapper (KSnapshot)? [Y/n] "
-read opt
-if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
-then
-    pacman -S kdegraphics-ksnapshot
 fi
 echo ""
 
@@ -174,28 +147,11 @@ then
 fi
 echo ""
 
-echo -n "Install minesewwper-like game (KMines)? [Y/n] "
+echo -n "Install games (KMines, KBreakout, KSquares)? [Y/n] "
 read opt
 if [ -z "$opt" ] || [ "$opt" = "y" ] || [ "$opt" = "Y" ]
 then
-    pacman -S kdegames-kmines
-fi
-echo ""
-
-echo -n "Install VCS (Git/Mercurial/SVN/All/None)? [1/2/3/A/n] "
-read opt
-if [ "$opt" = "1" ]
-then
-    pacman -S git openssh
-elif [ "$opt" = "2" ]
-then
-    pacman -S mercurial openssh
-elif [ "$opt" = "3" ]
-then
-    pacman -S subversion openssh
-elif [ "$opt" = "A" ] || [ "$opt" = "a" ]
-then
-    pacman -S git mercurial subversion openssh
+    pacman -S kdegames-k{mines,breakout,squares}
 fi
 echo ""
 
@@ -217,20 +173,18 @@ echo ""
 
 #pacman -S mp3splt
 #pacman -S wireshark php-apache
-#pacman -S cmake python2-qt
 #aurman -S ttf-ms-fonts ttf-vista-fonts ttf-google-webfonts ttf-tahoma partitionmanager-svn
 echo ":: Install complete."
 echo
 
-# Add to the DAEMONS array in /etc/rc.conf to start them at every boot.
-echo -n ":: Setting up daemons... "
-sed -i 's/^DAEMONS=.*/DAEMONS=\(syslog-ng dbus networkmanager crond kdm\)/g' /etc/rc.conf
-echo "Done"
+echo -n ":: Setting up services... "
+systemctl enable kdm.service
+systemctl enable NetworkManager.service
+echo
 
 # Setup pacman mirrorlist
 echo -n ":: Setting up pacman mirrorlist... "
-mv /etc/pacman.d/mirrorlist.backup /etc/pacman.d/mirrorlist
-echo "Server = ftp://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+cat /etc/pacman.d/mirrorlist.backup >> /etc/pacman.d/mirrorlist
 echo "Done"
 
 # Reboot
@@ -242,4 +196,3 @@ read ch
 if [ -z "$ch" -o "$ch" = "y" -o "$ch" = "Y" ]; then
 	reboot
 fi
-
