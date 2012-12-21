@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Backup pacman cache
+# Setup pacman mirrorlist
+echo -n ":: Setting up pacman mirrorlist... "
 alias pacman='pacman --noconfirm --needed'
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
+cp /etc/pacman.d/mirrorlist /tmp/mrl
+echo "Server = http://mirror.cse.iitk.ac.in/archlinux/\$repo/os/\$arch" | cat - /tmp/mrl > /etc/pacman.d/mirrorlist
 
 # Users
 echo ":: Installing zsh"
@@ -47,6 +48,8 @@ echo "::Installing misc tools"
 pacman -S zip unzip unrar flashplugin youtube-dl gtk-theme-swtich2
 pacman -S ntfs-3g dosfstools ntfsprogs
 pacman -S git openssh cmake python2-qt
+pacman -S usb_modeswitch modemmanager
+pacman -S libreoffice-{en-US,calc,impress,writer,kde4,extension-pdfimport}
 
 echo -n "Install quake-like terminal (Yakuake)? [Y/n] "
 read opt
@@ -181,11 +184,6 @@ echo -n ":: Setting up services... "
 systemctl enable kdm.service
 systemctl enable NetworkManager.service
 echo
-
-# Setup pacman mirrorlist
-echo -n ":: Setting up pacman mirrorlist... "
-cat /etc/pacman.d/mirrorlist.backup >> /etc/pacman.d/mirrorlist
-echo "Done"
 
 # Reboot
 echo
