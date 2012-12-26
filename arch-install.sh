@@ -26,7 +26,7 @@ genstab -p /mnt >> /mnt/etc/fstab
 echo "==> Setting hostname"
 echo $hostname > /mnt/etc/hostname
 echo "==> Setting localtime"
-chroot ln -s /usr/share/zoneifo/$timezone /etc/localtime
+chroot ln -s /usr/share/zoneinfo/$timezone /etc/localtime
 echo "==> Setting locale and keyboard preferences"
 echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
 echo "KEYMAP=us" > /mnt/etc/vconsole.conf
