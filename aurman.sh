@@ -52,7 +52,7 @@ function removepkg()
 
     echo ":: Getting dependency list"
     cd /tmp
-    wget -q http://aur.archlinux.org/packages/$pkg/$pkg.tar.gz -O - | tar zx
+    wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
     source $pkg/PKGBUILD
 
     echo ":: Removing dependencies"
