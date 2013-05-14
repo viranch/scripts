@@ -1,3 +1,4 @@
+# Cross-platform!
 # script to open specified file with associated application
 # Usage: qt-open ~/some/file.avi
 
