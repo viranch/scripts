@@ -16,7 +16,6 @@ DB_SELECTED = ROOT+'/Selected/'
 
 WEB = 'http://www.skins.be/'
 RSS = 'http://www.skins.be/feeds/en/skins.xml'
-PROXY = 0
 RES = '-1920x1200-'
 url_list = []
 CONF = HOME+'/.skins.conf'
@@ -26,11 +25,6 @@ def ask(question):
         ch = raw_input(question)
         if ch=='n' or ch=='N': return false
         if ch=='': return true
-
-def proxify(link):
-    if PROXY:
-        link = link.replace('http:/', 'https://www.suresome.com/proxy/nph-secure/00A/http')
-    return link
 
 def parse(link):
     tokens = link.split('/')
@@ -59,7 +53,7 @@ def get_updates(page=1):
     last = read_last()
     print 'Page ' + str(page) + ',',
     sys.stdout.flush()
-    f = urllib2.urlopen(proxify(WEB+'/page/'+str(page)))
+    f = urllib2.urlopen(WEB+'/page/'+str(page))
     s = f.read()
     f.close()
     while True:
