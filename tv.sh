@@ -21,9 +21,9 @@ test -d "$dirpath" || (echo "Invalid download path: $dirpath" && exit 2)
 # determine 'yesterday'
 platform=`uname`
 if [[ "$platform" == "Linux" ]]; then
-    yest=$(date -d "`date` -1 day" +%Y-%m-%d)
+    yest=$(date -d "`date` -1 day" +%F)
 elif [[ "$platform" == "Darwin" ]]; then
-    yest=`date -v -1d +%Y-%m-%d`
+    yest=`date -v -1d +%F`
 else
     echo "Unknown platform: '$platform', exiting."
     exit 3
