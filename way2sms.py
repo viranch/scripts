@@ -1,3 +1,4 @@
+# Doesn't work anymore, needs to be fixed
 import sys
 import time
 import urllib2, cookielib
