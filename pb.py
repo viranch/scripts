@@ -2,9 +2,12 @@ import sys
 import urllib, urllib2
 import subprocess
 
-paste = sys.stdin.read()
+sys.argv.append("text")
 
-f = urllib2.urlopen("http://pb/", urllib.urlencode({"name":"Viranch Mehta", "lang":"text", "code":paste, "submit":"submit"}))
+paste = sys.stdin.read()
+lang = sys.argv[1]
+
+f = urllib2.urlopen("http://pb/", urllib.urlencode({"name":"Viranch Mehta", "lang":lang, "code":paste, "submit":"submit"}))
 url = f.url
 f.close()
 
