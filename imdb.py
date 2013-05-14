@@ -14,16 +14,7 @@ s=f.read()
 f.close()
 
 xml = minidom.parseString(s)
-movie = xml.firstChild.childNodes[1]
+movie = xml.firstChild.childNodes[0].attributes
 
-def data(o, attr): return o.attributes[attr].value
-
-print 'Title:', data(movie, 'title'), '('+data(movie, 'year')+')', '['+data(movie, 'rating')+']', '\n'
-
-print 'Genre:', data(movie, 'genre'), '\n'
-
-print 'Actors:'
-print data(movie, 'actors'), '\n'
-
-print 'Plot:'
-print data(movie, 'plot'), '\n'
+for key in movie.keys():
+    print key, ':', movie[key].value
