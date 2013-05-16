@@ -16,7 +16,7 @@ dirpath="$2"
 # validate input link
 match=$(echo $link | grep -o "^http://www\.mytvrss\.com/tvrss\.xml?id=[0-9]\+$")
 test -z "$match" && echo "Invalid URL. Please visit mytvrss.com to generate your personalised URL" && exit 1
-test -d "$dirpath" || (echo "Invalid download path: $dirpath" && exit 2)
+test -d "$dirpath" || echo "Invalid download path: $dirpath" && exit 2
 
 # determine 'yesterday'
 platform=`uname`
@@ -34,5 +34,5 @@ curl -s $link | grep $yest -B5 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' 
 do
    echo "Downloading '$title'..."
    hash=$(curl -s http://torrentz.in/feed?q=`echo $title | sed 's/ /+/g'` | grep "<link>.*$" -o | head -n2 | tail -n1 | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g' | tr '[a-z]' '[A-Z]')
-   curl -s --compressed http://torcache.net/torrent/$hash.torrent > "$output_dir"/`echo $title | sed 's/ /./g'`.torrent
+   curl -s --compressed http://torcache.net/torrent/$hash.torrent > "$dirpath/`echo $title | sed 's/ /./g'`.torrent"
 done
