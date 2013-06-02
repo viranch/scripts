@@ -8,6 +8,7 @@ import sys
 import os
 import shutil
 import subprocess
+from lxml import etree
 
 HOME = os.getenv("HOME")
 ROOT = HOME+'/Pictures/Wallpapers'
@@ -16,7 +17,6 @@ DB_SELECTED = ROOT+'/Selected/'
 
 WEB = 'http://www.skins.be/'
 RSS = 'http://www.skins.be/feeds/en/skins.xml'
-RES = '-1920x1200-'
 url_list = []
 CONF = HOME+'/.skins.conf'
 
@@ -28,7 +28,7 @@ def ask(question):
 
 def parse(link):
     tokens = link.split('/')
-    return tokens[-4], tokens[-3]
+    return tokens[-4], tokens[-3], tokens[-2]
 
 def read_last():
     try:
@@ -45,23 +45,19 @@ def write_last(last):
     conf.close()
 
 def get_url(page):
-    name, id = parse(page)
-    url = 'http://wallpapers.skins.be/'+name+'/'+name+RES+id+'.jpg'
+    name, wid, res = parse(page)
+    filename = '-'.join([name,res,wid]) + '.jpg'
+    url = '/'.join(['http://wallpapers.skins.be', name, filename])
     return url
 
 def get_updates(page=1):
     last = read_last()
     print 'Page ' + str(page) + ',',
     sys.stdout.flush()
-    f = urllib2.urlopen(WEB+'/page/'+str(page))
-    s = f.read()
-    f.close()
-    while True:
-        st = s.find('motiveImage')
-        if st<0: break
-        s = s[st:]
-        s = s[s.find(' href="')+7:]
-        url = get_url(s[:s.find('"')])
+    doc = etree.parse(WEB+'/page/'+str(page), etree.HTMLParser()).getroot()
+    for wp in doc.xpath('//ul[@class="resolutionListing"]'):
+        page = wp.xpath('li')[-1].xpath('a/@href')[0]
+        url = get_url(page)
         if url==last: break
         url_list.append(url)
     if url!=last: get_updates(page+1)
