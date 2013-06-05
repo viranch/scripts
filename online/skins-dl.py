@@ -15,7 +15,7 @@ ROOT = HOME+'/Pictures/Wallpapers'
 DB = ROOT+'/Skins.be/'
 DB_SELECTED = ROOT+'/Selected/'
 
-WEB = 'http://www.skins.be/'
+WEB = 'http://www.skins.be'
 RSS = 'http://www.skins.be/feeds/en/skins.xml'
 url_list = []
 CONF = HOME+'/.skins.conf'
@@ -54,7 +54,8 @@ def get_updates(page=1):
     last = read_last()
     print 'Page ' + str(page) + ',',
     sys.stdout.flush()
-    doc = etree.parse(WEB+'/page/'+str(page), etree.HTMLParser()).getroot()
+    f = urllib2.urlopen('/'.join([WEB, 'page', str(page)]))
+    doc = etree.parse(f, etree.HTMLParser()).getroot()
     for wp in doc.xpath('//ul[@class="resolutionListing"]'):
         page = wp.xpath('li')[-1].xpath('a/@href')[0]
         url = get_url(page)
