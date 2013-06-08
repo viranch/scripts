@@ -16,7 +16,6 @@ DB = ROOT+'/Skins.be/'
 DB_SELECTED = ROOT+'/Selected/'
 
 WEB = 'http://www.skins.be'
-RSS = 'http://www.skins.be/feeds/en/skins.xml'
 url_list = []
 CONF = HOME+'/.skins.conf'
 
@@ -110,51 +109,33 @@ def copy_to_database(fname, move=False):
         print '', fname, 'copied to database'
 
 def main():
-    rss = True
-    print_uris = False
-    total_size = 0
-    if '-p' in sys.argv:
-        print_uris = True
-    for arg in sys.argv[1:]:
-        if arg[0]!='-':
-            rss = False
-            url_list.append(get_url(arg))
-    if rss:
-        print 'Looking up for new wallpapers...',
-        sys.stdout.flush()
-        get_updates()
-        print len(url_list), 'found.'
+    print 'Looking up for new wallpapers...',
+    sys.stdout.flush()
+    get_updates()
+    print len(url_list), 'found.'
 
-    if len(url_list)>0 and not print_uris:
-        print 'Downloading...'
+    return if url_list == []
 
-    for i in range(len(url_list)):
-        if print_uris:
-            print url_list[i]
-
-    if len(url_list)>0:
-        subprocess.call(['wget', '-nc', '--max-redirect=0'] + url_list)
-
-    if len(url_list)>0 and not print_uris:
-        if rss:
-            write_last(url_list[0])
-        raw_input('Copy to the database? ')
-        selected=[]
-        for url in url_list:
-            try:
-                fname = url.split('/')[-1]
-                isSelected = os.access(DB_SELECTED+getdirname(fname), os.F_OK)
-                if isSelected: selected.append(url)
-                copy_to_database(fname, not isSelected)
-            except IOError as error:
-                print str(error)
-        if len(selected)>0:
-            raw_input('\nCopy to the selected wallpapers? ')
-        for url in selected:
-            try:
-                copy_to_selected(url.split('/')[-1])
-            except IOError as error:
-                print str(error)
+    print 'Downloading...'
+    subprocess.call(['wget', '-nc', '--max-redirect=0'] + url_list)
+    write_last(url_list[0])
+    raw_input('Copy to the database? ')
+    selected=[]
+    for url in url_list:
+        try:
+            fname = url.split('/')[-1]
+            isSelected = os.access(DB_SELECTED+getdirname(fname), os.F_OK)
+            if isSelected: selected.append(url)
+            copy_to_database(fname, not isSelected)
+        except IOError as error:
+            print str(error)
+    if len(selected)>0:
+        raw_input('\nCopy to the selected wallpapers? ')
+    for url in selected:
+        try:
+            copy_to_selected(url.split('/')[-1])
+        except IOError as error:
+            print str(error)
 
 if __name__=='__main__':
     main()
