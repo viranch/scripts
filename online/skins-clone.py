@@ -27,7 +27,7 @@ def download(dirpath, links):
     subprocess.call(['wget', '-nc', '--max-redirect=0'] + links)
     os.chdir(pwd)
 
-print 'Getting everone...'
+print 'Getting everyone...'
 doc = etree.parse('http://www.skins.be/babes', hp).getroot()
 for model in doc.xpath('//div[@class="box"]/a'):
     name = model.text.strip()
