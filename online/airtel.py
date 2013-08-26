@@ -23,26 +23,16 @@ def login(user, passwd):
         'password': passwd,
         'login-form-type': 'pwd',
     }
-    try:
-        s = uopen('https://airtel.in/pkmslogin.form', data)
-    except urllib2.URLError:
-        login(user, passwd)
+    s = uopen('https://airtel.in/pkmslogin.form', data)
 
 def quota(phone_no, acc_no):
-    try:
-        s = uopen('https://www.airtel.in/myaccount/NavigationApp/jsp/unbill.jsp?no='+phone_no+'&accno='+acc_no+'&serviceType=DSL')
-    except urllib2.URLError:
-        return quota(phone_no, acc_no)
-
+    s = uopen('https://www.airtel.in/myaccount/NavigationApp/jsp/unbill.jsp?no='+phone_no+'&accno='+acc_no+'&serviceType=DSL')
     s = s[s.find('url :"')+6:]
     ajax_url = s[:s.find('"')]
     s = s[s.find('data: "')+7:]
     ajax_data = s[:s.find('"')]
 
-    try:
-        s = opener.open('https://www.airtel.in'+ajax_url, ajax_data).read()
-    except urllib2.URLError:
-        return quota(phone_no, acc_no)
+    s = opener.open('https://www.airtel.in/'+ajax_url, ajax_data).read()
 
     try:
         root = etree.parse(StringIO(s), etree.XMLParser()).getroot()
