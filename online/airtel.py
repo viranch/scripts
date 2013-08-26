@@ -51,6 +51,7 @@ def read_usage():
 def save_usage(used):
     open(STATE_FILE, 'w').write(str(used))
 
+login(user, passwd)
 used, left = quota(phone, acc)
 last_used = read_usage()
 print str(used-last_used), 'GB used:', str(used)+'/'+str(int(used+left)), 'GB quota'
