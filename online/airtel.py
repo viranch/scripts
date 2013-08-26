@@ -9,6 +9,8 @@ passwd = sys.argv[2]
 phone = sys.argv[3]
 acc = sys.argv[4]
 
+STATE_FILE = os.getenv('HOME')+'/.airtel.quota'
+
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 
