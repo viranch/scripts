@@ -49,7 +49,7 @@ def quota(phone_no, acc_no):
         used = float(root.xpath('//unbilledDSLUsage/unbilledUsage')[0].text)
         left = float(root.xpath('//unbilledDSLUsage/gbLeft')[0].text)
         return used, left
-    except IndexError:
+    except (IndexError, etree.XMLSyntaxError):
         return quota(phone_no, acc_no)
 
 def read_usage():
