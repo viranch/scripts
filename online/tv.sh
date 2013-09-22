@@ -4,8 +4,8 @@
 # Requires your customized feed from myrvrss.com with your selected shows.
 #
 # Run as a daily cron job, downloads shows aired the previous day from now.
-# Usage: tv.sh <link-to-rss-feed> <download-directory>
-# Eg: tv.sh http://mytvrss.com/tvrss.xml?id=123456 ~/Downloads/torrents
+# Usage: tv.sh -l <link-to-rss-feed> -o <download-directory>
+# Eg: tv.sh -l http://mytvrss.com/tvrss.xml?id=123456 -o ~/Downloads/torrents
 #
 # Transmission/uTorrent can watch for .torrent files in the download directory.
 #
