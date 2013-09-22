@@ -41,11 +41,9 @@ match=$(echo $link | grep -o "^http://followshows\.com/feed/[^/]\+$")
 test -z "$match" && echo "Invalid URL. Please visit followshows.com to generate your personalised URL" && exit 1
 test -d "$dirpath" || (echo "Invalid download path: $dirpath" && exit 2)
 
-# download .torrent for shows aired today
-echo "Getting episode list..."
-curl -s $link | grep "<title>\|<dc:date>" | grep `date +%F` -B1 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' | while read title
-do
-    title="$title$suff"
+function add_torrent() {
+    title="$1"
+    test -n "$2" && title="$title $2"
     query=`echo "$title" | sed 's/ /+/g'`
     echo -n "Searching '$title'... "
     hash=$(curl -s http://torrentz.in/feed?q=$query | grep "<link>.*$" -o | head -n2 | grep -v "search?q=" | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g')
@@ -56,4 +54,17 @@ do
     else
         echo "failed"
     fi
+}
+
+# download .torrent for shows aired today
+echo "Getting episode list..."
+curl -s $link | grep "<title>\|<dc:date>" | grep `date +%F` -B1 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' | while read title
+do
+    pattern=$(echo $title | sed 's/ [^ ]\+$//g') # extract show name for grepping in tv.conf
+    test -f ~/.tv.conf && grep -i "$pattern:" ~/.tv.conf | while read line
+    do
+        suff=$(echo $line | cut -d':' -f2)
+        test -n "$suff" && add_torrent "$title" "$suff"
+    done
+    add_torrent "$title"
 done
