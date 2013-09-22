@@ -37,24 +37,13 @@ while getopts "l:o:s:h" OPTION; do
 done
 
 # validate input link
-match=$(echo $link | grep -o "^http://www\.mytvrss\.com/tvrss\.xml?id=[0-9]\+$")
-test -z "$match" && echo "Invalid URL. Please visit mytvrss.com to generate your personalised URL" && exit 1
+match=$(echo $link | grep -o "^http://followshows\.com/feed/[^/]\+$")
+test -z "$match" && echo "Invalid URL. Please visit followshows.com to generate your personalised URL" && exit 1
 test -d "$dirpath" || (echo "Invalid download path: $dirpath" && exit 2)
 
-# determine 'yesterday'
-platform=`uname`
-if [[ "$platform" == "Linux" ]]; then
-    yest=$(date -d "`date` -1 day" +%F)
-elif [[ "$platform" == "Darwin" ]]; then
-    yest=`date -v -1d +%F`
-else
-    echo "Unknown platform: '$platform', exiting."
-    exit 3
-fi
-
-# download .torrent for shows aired yesterday
+# download .torrent for shows aired today
 echo "Getting episode list..."
-curl -s $link | grep $yest -B5 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' | while read title
+curl -s $link | grep "<title>\|<dc:date>" | grep `date +%F` -B1 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' | while read title
 do
     title="$title$suff"
     query=`echo "$title" | sed 's/ /+/g'`
