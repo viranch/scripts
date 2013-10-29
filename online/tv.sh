@@ -19,7 +19,8 @@ EOF
 link=""
 dirpath=""
 suff=""
-while getopts "l:o:s:h" OPTION; do
+all=""
+while getopts "l:o:s:ah" OPTION; do
     case $OPTION in
         l)
             link="$OPTARG"
@@ -29,6 +30,9 @@ while getopts "l:o:s:h" OPTION; do
             ;;
         s)
             suff=" $OPTARG"
+            ;;
+        a)
+            all="true"
             ;;
         h)
             usage
@@ -66,5 +70,5 @@ do
         suff=$(echo $line | cut -d':' -f2)
         test -n "$suff" && add_torrent "$title" "$suff"
     done
-    add_torrent "$title"
+    test -n "$all" && add_torrent "$title"
 done
