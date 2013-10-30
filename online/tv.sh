@@ -68,7 +68,7 @@ do
     test -f ~/.tv.conf && grep -i "$pattern:" ~/.tv.conf | while read line
     do
         suff=$(echo $line | cut -d':' -f2)
-        test -n "$suff" && add_torrent "$title" "$suff"
+        add_torrent "$title" "$suff"
     done
     test -n "$all" && add_torrent "$title"
 done
