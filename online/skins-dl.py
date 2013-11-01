@@ -114,7 +114,7 @@ def main():
     get_updates()
     print len(url_list), 'found.'
 
-    return if url_list == []
+    if url_list == []: return
 
     print 'Downloading...'
     subprocess.call(['wget', '-nc', '--max-redirect=0'] + url_list)
