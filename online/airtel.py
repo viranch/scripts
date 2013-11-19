@@ -10,6 +10,7 @@ phone = sys.argv[3]
 acc = sys.argv[4]
 
 STATE_FILE = os.getenv('HOME')+'/.airtel.quota'
+MAX_RETRIES = 10
 
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
@@ -17,7 +18,7 @@ opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 def uopen(url, data={}):
     return opener.open(url, urllib.urlencode(data)).read()
 
-def login(user, passwd):
+def login(user, passwd, retry=0):
     data = {
         'username': user,
         'password': passwd,
@@ -26,13 +27,15 @@ def login(user, passwd):
     try:
         s = uopen('https://airtel.in/pkmslogin.form', data)
     except urllib2.URLError:
-        login(user, passwd)
+        if retry == MAX_RETRIES: sys.exit(1)
+        login(user, passwd, retry+1)
 
-def quota(phone_no, acc_no):
+def quota(phone_no, acc_no, retry=0):
     try:
         s = uopen('https://www.airtel.in/myaccount/NavigationApp/jsp/unbill.jsp?no='+phone_no+'&accno='+acc_no+'&serviceType=DSL')
     except urllib2.URLError:
-        return quota(phone_no, acc_no)
+        if retry == MAX_RETRIES: sys.exit(1)
+        return quota(phone_no, acc_no, retry+1)
 
     s = s[s.find('url :"')+6:]
     ajax_url = s[:s.find('"')]
@@ -42,7 +45,8 @@ def quota(phone_no, acc_no):
     try:
         s = opener.open('https://www.airtel.in'+ajax_url, ajax_data).read()
     except urllib2.URLError:
-        return quota(phone_no, acc_no)
+        if retry == MAX_RETRIES: sys.exit(1)
+        return quota(phone_no, acc_no, retry+1)
 
     try:
         root = etree.parse(StringIO(s), etree.XMLParser()).getroot()
@@ -50,7 +54,8 @@ def quota(phone_no, acc_no):
         left = float(root.xpath('//unbilledDSLUsage/gbLeft')[0].text)
         return used, left
     except (IndexError, etree.XMLSyntaxError):
-        return quota(phone_no, acc_no)
+        if retry == MAX_RETRIES: sys.exit(1)
+        return quota(phone_no, acc_no, retry+1)
 
 def read_usage():
     try:
