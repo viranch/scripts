@@ -70,5 +70,5 @@ do
         suff=$(echo $line | cut -d':' -f2)
         add_torrent "$title" "$suff"
     done
-    test -n "$all" && add_torrent "$title"
+    test -n "$all" && add_torrent "$title eztv"
 done
