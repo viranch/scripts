@@ -43,7 +43,7 @@ done
 # validate input link
 match=$(echo $link | grep -o "^http://followshows\.com/feed/[^/]\+$")
 test -z "$match" && echo "Invalid URL. Please visit followshows.com to generate your personalised URL" && exit 1
-test -d "$dirpath" || (echo "Invalid download path: $dirpath" && exit 2)
+test -d "$dirpath" || mkdir -p "$dirpath" 2>/dev/null || (echo "Invalid download path: $dirpath" && exit 2)
 
 function add_torrent() {
     title="$1"
