@@ -45,12 +45,17 @@ match=$(echo $link | grep -o "^http://followshows\.com/feed/[^/]\+$")
 test -z "$match" && echo "Invalid URL. Please visit followshows.com to generate your personalised URL" && exit 1
 test -d "$dirpath" || mkdir -p "$dirpath" 2>/dev/null || (echo "Invalid download path: $dirpath" && exit 2)
 
+function search() {
+    curl -s http://torrentz.in/feed?q="$@" | grep "<link>.*$" -o | head -n2 | grep -v "search?q=" | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g'
+}
+
+
 function add_torrent() {
     title="$1"
     test -n "$2" && title="$title $2"
     query=`echo "$title" | sed 's/ /+/g'`
     echo -n "Searching '$title'... "
-    hash=$(curl -s http://torrentz.in/feed?q=$query | grep "<link>.*$" -o | head -n2 | grep -v "search?q=" | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g')
+    hash=$(search $query)
     if [[ -n $hash ]]; then
         echo "found"
         fname="`echo $title | sed 's/ /./g'`.torrent"
