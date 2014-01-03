@@ -93,7 +93,6 @@ do
             for pkg in "$@"; do
                 installpkg $pkg
             done
-			exit 0
 			;;
         U)
             upgradeaur
@@ -103,7 +102,6 @@ do
             for pkg in "$@"; do
                 removepkg $pkg
             done
-			exit 0
 			;;
 	esac
 done
