@@ -87,21 +87,21 @@ function removepkg()
 source /etc/makepkg.conf
 while getopts "SUR" OPTION
 do
-	case $OPTION in
-		S)
-			shift $((OPTIND-1))
+    case $OPTION in
+        S)
+            shift $((OPTIND-1))
             for pkg in "$@"; do
                 installpkg $pkg
             done
-			;;
+            ;;
         U)
             upgradeaur
             ;;
-		R)
-			shift $((OPTIND-1))
+        R)
+            shift $((OPTIND-1))
             for pkg in "$@"; do
                 removepkg $pkg
             done
-			;;
-	esac
+            ;;
+    esac
 done
