@@ -46,6 +46,21 @@ function installpkg()
     echo ":: $pkg installed"
 }
 
+function upgradeaur()
+{
+    cd /tmp
+    pkgs=""
+    for pkg in `pacman -Qqm`; do
+        current_ver=`pacman -Q $pkg | cut -d' ' -f2`
+        test -f $pkg/PKGBUILD || wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
+        source $pkg/PKGBUILD
+        if [[ "$pkgver-$pkgrel" != $current_ver ]]; then
+            echo ":: Upgrading $pkgname from $current_ver to $pkgver-$pkgrel"
+            installpkg $pkgname
+        fi
+    done
+}
+
 function removepkg()
 {
     pkg=$1
@@ -70,7 +85,7 @@ function removepkg()
 }
 
 source /etc/makepkg.conf
-while getopts "SR" OPTION
+while getopts "SUR" OPTION
 do
 	case $OPTION in
 		S)
@@ -80,6 +95,9 @@ do
             done
 			exit 0
 			;;
+        U)
+            upgradeaur
+            ;;
 		R)
 			shift $((OPTIND-1))
             for pkg in "$@"; do
