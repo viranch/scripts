@@ -36,7 +36,7 @@ function installpkg()
         sudo pacman -U "$pkgfile"
     else
         cd $pkg
-        makepkg -si
+        makepkg --noconfirm -si
         ret=$?
         if [ $ret = "1" ]; then
             exit $ret
