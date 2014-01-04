@@ -2,6 +2,8 @@
 
 root="$HOME/Softwares/Arch/AUR"
 mkdir -p $root
+temp="/tmp/aurman"
+mkdir -p $temp
 
 function installpkg()
 {
@@ -14,7 +16,7 @@ function installpkg()
     fi
 
     echo ":: Downloading package file for $pkg"
-    cd /tmp
+    cd $temp
     wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
     source $pkg/PKGBUILD
     echo ":: Installing missing dependencies"
@@ -48,7 +50,7 @@ function installpkg()
 
 function upgradeaur()
 {
-    cd /tmp
+    cd $temp
     pkgs=""
     for pkg in `pacman -Qqm`; do
         current_ver=`pacman -Q $pkg | cut -d' ' -f2`
@@ -66,7 +68,7 @@ function removepkg()
     pkg=$1
 
     echo ":: Getting dependency list"
-    cd /tmp
+    cd $temp
     wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
     source $pkg/PKGBUILD
 
