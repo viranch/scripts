@@ -52,7 +52,7 @@ function upgradeaur()
     pkgs=""
     for pkg in `pacman -Qqm`; do
         current_ver=`pacman -Q $pkg | cut -d' ' -f2`
-        test -f $pkg/PKGBUILD || wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
+        wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
         source $pkg/PKGBUILD
         if [[ "$pkgver-$pkgrel" != $current_ver ]]; then
             echo ":: Upgrading $pkgname from $current_ver to $pkgver-$pkgrel"
