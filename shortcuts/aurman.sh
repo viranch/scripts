@@ -50,14 +50,18 @@ function installpkg()
 
 function upgradeaur()
 {
+    echo ":: Looking for updates"
     cd $temp
     pkgs=""
     for pkg in `pacman -Qqm`; do
         current_ver=`pacman -Q $pkg | cut -d' ' -f2`
+        epoch=""
         wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
         source $pkg/PKGBUILD
-        if [[ "$pkgver-$pkgrel" != $current_ver ]]; then
-            echo ":: Upgrading $pkgname from $current_ver to $pkgver-$pkgrel"
+        new_ver="$pkgver-$pkgrel"
+        test -n "$epoch" && new_ver="$epoch:$new_ver"
+        if [[ "$new_ver" != "$current_ver" ]]; then
+            echo ":: Upgrading $pkgname from $current_ver to $new_ver"
             installpkg $pkgname
         fi
     done
