@@ -16,6 +16,8 @@ echo "==> Installing grub"
 chroot pacman -S grub-bios
 echo "==> Configuring grub"
 chroot grub-mkconfig -o /boot/grub/grub.cfg
+echo "==> Activating grub"
+grub-install --root-directory /mnt $(echo $roof_rs | sed 's/.$//g')
 
 echo "==> Generating fstab"
 genfstab -p /mnt >> /mnt/etc/fstab
