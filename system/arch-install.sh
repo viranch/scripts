@@ -22,7 +22,7 @@ echo "==> Configuring grub"
 chroot grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "==> Generating fstab"
-genstab -p /mnt >> /mnt/etc/fstab
+genfstab -p /mnt >> /mnt/etc/fstab
 echo "==> Setting hostname"
 echo $hostname > /mnt/etc/hostname
 echo "==> Setting localtime"
