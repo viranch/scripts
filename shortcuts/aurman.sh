@@ -41,7 +41,7 @@ function installpkg()
         if [ $ret = "1" ]; then
             exit $ret
         else
-            cp $pkgname-$pkgver-$pkgrel-*pkg.tar.xz $root/
+            cp $pkgname-*pkg.tar.xz $root/
         fi
     fi
 
