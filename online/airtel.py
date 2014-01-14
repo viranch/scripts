@@ -17,7 +17,9 @@ opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 urllib2.install_opener(opener)
 
 def uopen(url, data={}):
-    return urllib2.urlopen(url, urllib.urlencode(data)).read()
+    s = urllib2.urlopen(url, urllib.urlencode(data)).read()
+    #for ck in cj: print ck
+    return s
 
 def login(user, passwd, retry=0):
     data = {
