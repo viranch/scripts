@@ -14,9 +14,10 @@ MAX_RETRIES = 10
 
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+urllib2.install_opener(opener)
 
 def uopen(url, data={}):
-    return opener.open(url, urllib.urlencode(data)).read()
+    return urllib2.urlopen(url, urllib.urlencode(data)).read()
 
 def login(user, passwd, retry=0):
     data = {
