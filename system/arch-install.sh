@@ -1,5 +1,4 @@
 root_fs=$1
-home_fs=$2
 hostname="arch"
 timezone="Asia/Kolkata"
 
@@ -7,9 +6,6 @@ echo "==> Formatting root partition $root_fs"
 mkfs -t ext4 $root_fs
 echo "==> Mounting root partition to /mnt"
 mount $root_fs /mnt
-echo "==> Mounting home partition to /mnt/home"
-mkdir -p /mnt/home
-mount $home_fs /mnt/home
 
 echo "==> Installing base system"
 pacstrap /mnt base base-devel
