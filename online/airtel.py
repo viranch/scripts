@@ -28,7 +28,7 @@ def login(user, passwd, retry=0):
         'login-form-type': 'pwd',
     }
     try:
-        s = uopen('https://airtel.in/pkmslogin.form', data)
+        s = uopen('https://www.airtel.in/pkmslogin.form', data)
     except urllib2.URLError:
         if retry == MAX_RETRIES: sys.exit(1)
         login(user, passwd, retry+1)
@@ -46,7 +46,7 @@ def quota(phone_no, acc_no, retry=0):
     ajax_data = s[:s.find('"')]
 
     try:
-        s = opener.open('https://www.airtel.in'+ajax_url, ajax_data).read()
+        s = opener.open('https://www.airtel.in'+ajax_url.replace(' ','%20'), ajax_data).read()
     except urllib2.URLError:
         if retry == MAX_RETRIES: sys.exit(1)
         return quota(phone_no, acc_no, retry+1)
