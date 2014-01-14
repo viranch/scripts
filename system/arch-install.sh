@@ -36,3 +36,7 @@ chroot mkinitcpio -p linux
 
 echo "==> Set root password"
 chroot passwd
+
+echo
+echo "Base system installed. Reboot into the newly installed arch now"
+echo
