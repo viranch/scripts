@@ -28,7 +28,7 @@ chroot ln -s /usr/share/zoneinfo/$timezone /etc/localtime
 echo "==> Setting locale and keyboard preferences"
 echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
 echo "KEYMAP=us" > /mnt/etc/vconsole.conf
-# uncomment the locale in /etc/locale.gen
+sed -i 's/^#en_US.UTF/en_US.UTF/g' /etc/locale.gen
 chroot locale-gen
 
 echo "==> Generating kernel image"
