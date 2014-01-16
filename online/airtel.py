@@ -16,8 +16,9 @@ cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 urllib2.install_opener(opener)
 
-def uopen(url, data={}):
-    s = urllib2.urlopen(url, urllib.urlencode(data)).read()
+def uopen(url, data={}, encode_data=True):
+    if encode_data: data = urllib.urlencode(data)
+    s = urllib2.urlopen(url, data).read()
     #for ck in cj: print ck
     return s
 
@@ -46,7 +47,7 @@ def quota(phone_no, acc_no, retry=0):
     ajax_data = s[:s.find('"')]
 
     try:
-        s = opener.open('https://www.airtel.in'+ajax_url.replace(' ','%20'), ajax_data).read()
+        s = uopen('https://www.airtel.in'+ajax_url.replace(' ','%20'), ajax_data, False)
     except urllib2.URLError:
         if retry == MAX_RETRIES: sys.exit(1)
         return quota(phone_no, acc_no, retry+1)
