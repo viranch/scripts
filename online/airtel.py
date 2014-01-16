@@ -4,10 +4,7 @@ import cookielib
 from lxml import etree
 from StringIO import StringIO
 
-user = sys.argv[1]
-passwd = sys.argv[2]
-phone = sys.argv[3]
-acc = sys.argv[4]
+user, passwd, phone, acc = sys.argv[1:]
 
 STATE_FILE = os.getenv('HOME')+'/.airtel.quota'
 MAX_RETRIES = 10
