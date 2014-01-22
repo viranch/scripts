@@ -4,8 +4,6 @@ import cookielib
 from lxml import etree
 from StringIO import StringIO
 
-user, passwd, phone, acc = sys.argv[1:]
-
 STATE_FILE = os.getenv('HOME')+'/.airtel.quota'
 MAX_RETRIES = 10
 
@@ -58,6 +56,19 @@ def quota(phone_no, acc_no, retry=0):
         if retry == MAX_RETRIES: sys.exit(1)
         return quota(phone_no, acc_no, retry+1)
 
+def gb_on_demand():
+    f = urllib2.urlopen('http://122.160.230.125:8080/gbod/gb_on_demand.do', timeout=3)
+    doc = etree.parse(f, etree.HTMLParser()).getroot()
+    lis = doc.xpath('//div[@class="content-data"]/ul/li')[1:3]
+
+    left = lis[0].text.encode('ascii','xmlcharrefreplace').replace('&#160;','')
+    total = lis[1].text.encode('ascii','xmlcharrefreplace').replace('&#160;','')
+    left = float(left.replace('Balance quota:','').replace('GB',''))
+    total = float(total.replace('High speed data limit:','').replace('GB',''))
+    used = total - left
+
+    return used, left
+
 def read_usage():
     try:
         return float(open(STATE_FILE).read())
@@ -67,8 +78,12 @@ def read_usage():
 def save_usage(used):
     open(STATE_FILE, 'w').write(str(used))
 
-login(user, passwd)
-used, left = quota(phone, acc)
+try:
+    used, left = gb_on_demand()
+except:
+    user, passwd, phone, acc = sys.argv[1:]
+    login(user, passwd)
+    used, left = quota(phone, acc)
 last_used = read_usage()
 print str(used-last_used), 'GB used:', str(used)+'/'+str(int(used+left)), 'GB quota'
 save_usage(used)
