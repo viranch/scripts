@@ -17,7 +17,7 @@ function installpkg()
 
     echo ":: Downloading package file for $pkg"
     cd $temp
-    wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
+    curl -s --compressed https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
     source $pkg/PKGBUILD
     echo ":: Installing missing dependencies"
     echo "==> Build deps: " ${makedepends[@]}
@@ -56,7 +56,7 @@ function upgradeaur()
     for pkg in `pacman -Qqm`; do
         current_ver=`pacman -Q $pkg | cut -d' ' -f2`
         epoch=""
-        wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
+        curl -s --compressed https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
         source $pkg/PKGBUILD
         new_ver="$pkgver-$pkgrel"
         test -n "$epoch" && new_ver="$epoch:$new_ver"
@@ -73,7 +73,7 @@ function removepkg()
 
     echo ":: Getting dependency list"
     cd $temp
-    wget -q http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz -O - | tar zx
+    curl -s --compressed http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
     source $pkg/PKGBUILD
 
     echo ":: Removing dependencies"
