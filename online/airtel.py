@@ -85,5 +85,7 @@ except:
     login(user, passwd)
     used, left = quota(phone, acc)
 last_used = read_usage()
-print str(used-last_used), 'GB used:', str(used)+'/'+str(int(used+left)), 'GB quota'
-save_usage(used)
+this_used = used - last_used
+if this_used > 0:
+    print str(this_used), 'GB used:', str(used)+'/'+str(int(used+left)), 'GB quota'
+    save_usage(used)
