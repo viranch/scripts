@@ -1,10 +1,9 @@
-import sys, os
+import sys
 import urllib, urllib2
 import cookielib
 from lxml import etree
 from StringIO import StringIO
 
-STATE_FILE = os.getenv('HOME')+'/.airtel.quota'
 MAX_RETRIES = 10
 
 cj = cookielib.CookieJar()
@@ -69,23 +68,10 @@ def gb_on_demand():
 
     return used, left
 
-def read_usage():
-    try:
-        return float(open(STATE_FILE).read())
-    except IOError:
-        return 0
-
-def save_usage(used):
-    open(STATE_FILE, 'w').write(str(used))
-
 try:
     used, left = gb_on_demand()
 except:
     user, passwd, phone, acc = sys.argv[1:]
     login(user, passwd)
     used, left = quota(phone, acc)
-last_used = read_usage()
-this_used = used - last_used
-if this_used > 0:
-    print this_used, 'GB used:', str(used)+'/'+str(int(used+left)), 'GB quota'
-    save_usage(used)
+print str(used)+'/'+str(int(used+left)), 'GB used'
