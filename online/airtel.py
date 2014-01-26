@@ -87,5 +87,5 @@ except:
 last_used = read_usage()
 this_used = used - last_used
 if this_used > 0:
-    print str(this_used), 'GB used:', str(used)+'/'+str(int(used+left)), 'GB quota'
+    print this_used, 'GB used:', str(used)+'/'+str(int(used+left)), 'GB quota'
     save_usage(used)
