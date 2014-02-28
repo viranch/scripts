@@ -73,7 +73,7 @@ function removepkg()
 
     echo ":: Getting dependency list"
     cd $temp
-    curl -s --compressed http://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
+    curl -s --compressed https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
     source $pkg/PKGBUILD
 
     echo ":: Removing dependencies"
