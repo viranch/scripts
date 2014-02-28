@@ -47,16 +47,10 @@ test -d "$dirpath" || mkdir -p "$dirpath" 2>/dev/null || (echo "Invalid download
 
 function search() {
     #curl -s http://torrentz.in/feed?q="$@" | grep "<link>.*$" -o | head -n2 | grep -v "search?q=" | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g'
-    query="$(echo $@ | sed 's/+/%20/g')"
-    python2 << EOF | head -n1
-import urllib2
-from StringIO import StringIO
-import gzip
-from lxml import etree
-f = gzip.GzipFile(fileobj=StringIO(urllib2.urlopen('http://kickass.to/usearch/$query/').read()))
-doc = etree.parse(f, etree.HTMLParser()).getroot()
-for href in doc.xpath('//a[@title="Download torrent file"]/@href'): print href.split('?')[0].split('/')[-1].split('.')[0]
-EOF
+    cookie_file="/tmp/surecook"
+    rm -f $cookie_file
+    while [[ ! -f $cookie_file ]]; do; curl -s -XHEAD https://www.suresome.com/ -c $cookie_file > /dev/null; done
+    curl -s --compressed https://www.suresome.com/proxy/nph-secure/00A/http/torrentz.in/feed%3fq%3d"$@" -b $cookie_file | grep "<link>.*$" -o | head -n2 | grep -v "search?q=" | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g'
 }
 
 
