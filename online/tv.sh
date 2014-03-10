@@ -71,7 +71,7 @@ function add_torrent() {
 
 # download .torrent for shows aired today
 echo "Getting episode list..."
-curl -s $link | grep "<title>\|<dc:date>" | grep `date +%F` -B1 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' | while read title
+curl -s $link | grep "<title>\|<dc:date>" | grep `date +%F` -B1 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' | sed 's/\s*(.*)//g' | while read title
 do
     pattern=$(echo $title | sed 's/ [^ ]\+$//g') # extract show name for grepping in tv.conf
     test -f ~/.tv.conf && grep -i "$pattern:" ~/.tv.conf | while read line
