@@ -57,7 +57,7 @@ function search() {
 function add_torrent() {
     title="$1"
     test -n "$2" && title="$title $2"
-    query=`echo "$title" | sed 's/ /+/g'`
+    query=`echo "$title" | sed 's/ /+/g' | sed "s/'//g"`
     echo -n "Searching '$title'... "
     hash=$(search $query)
     if [[ -n $hash ]]; then
