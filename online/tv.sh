@@ -29,7 +29,7 @@ while getopts "l:o:s:ah" OPTION; do
             dirpath="$OPTARG"
             ;;
         s)
-            suff=" $OPTARG"
+            suff="$OPTARG"
             ;;
         a)
             all="true"
@@ -79,5 +79,5 @@ do
         title_suff=$(echo $line | cut -d':' -f2)
         add_torrent "$title" "$title_suff"
     done
-    test -n "$all" && add_torrent "$title"
+    test -n "$all" && add_torrent "$title" "$suff"
 done
