@@ -76,8 +76,8 @@ do
     pattern=$(echo $title | sed 's/ [^ ]\+$//g') # extract show name for grepping in tv.conf
     test -f ~/.tv.conf && grep -i "$pattern:" ~/.tv.conf | while read line
     do
-        suff=$(echo $line | cut -d':' -f2)
-        add_torrent "$title" "$suff"
+        title_suff=$(echo $line | cut -d':' -f2)
+        add_torrent "$title" "$title_suff"
     done
     test -n "$all" && add_torrent "$title"
 done
