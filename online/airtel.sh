@@ -4,7 +4,10 @@ state_file="$HOME/.airtel.quota"
 tmp_file="/tmp/usage"
 log_file="$HOME/airtel_usage.log"
 
-curl -s http://122.160.230.125:8080/gbod/gb_on_demand.do | sed 's/\r//g' | grep -E "(quota|limit):" | sed 's/&nbsp;//g' | sed 's/<\/\?li>//g' | sed 's/GB//g' | cut -d':' -f2 > $tmp_file
+echo -n > $tmp_file # truncate
+while [[ "$(wc -l < $tmp_file)" == "0" ]]; do
+    curl -s http://122.160.230.125:8080/gbod/gb_on_demand.do | sed 's/\r//g' | grep -E "(quota|limit):" | sed 's/&nbsp;//g' | sed 's/<\/\?li>//g' | sed 's/GB//g' | cut -d':' -f2 > $tmp_file
+done
 left=`head -n1 $tmp_file`
 total=`tail -n1 $tmp_file`
 rm -f $tmp_file
