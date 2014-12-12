@@ -14,4 +14,4 @@ grep -e "$conn_str" -e "$green_str" $ALL | grep -B1 "$green_str" | grep "$conn_s
 # list all evil
 grep "$conn_str" $ALL | cut -d' ' -f8 | grep -v -f $GOOD | uniq -c | grep -v "^[^0-9]*[0-9] " | \
     # block all evil not already blocked
-    awk '{print $2}' | while read ip; do test -z "`sudo iptables -nL | grep $ip`" && cmd="iptables -A INPUT -s $ip -j DROP"; echo $cmd; $cmd; done
+    awk '{print $2}' | while read ip; do test -z "`sudo iptables -nL | grep $ip`" && cmd="iptables -A INPUT -s $ip -j DROP" && echo $cmd && $cmd; done
