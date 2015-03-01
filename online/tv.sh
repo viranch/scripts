@@ -19,8 +19,7 @@ EOF
 link=""
 dirpath=""
 suff=""
-all=""
-while getopts "l:o:s:ah" OPTION; do
+while getopts "l:o:s:h" OPTION; do
     case $OPTION in
         l)
             link="$OPTARG"
@@ -30,9 +29,6 @@ while getopts "l:o:s:ah" OPTION; do
             ;;
         s)
             suff="$OPTARG"
-            ;;
-        a)
-            all="true"
             ;;
         h)
             usage
@@ -73,11 +69,5 @@ function add_torrent() {
 echo "Getting episode list..."
 curl -s $link | grep "<title>\|<dc:date>" | grep `date +%F` -B1 | grep  ">.* S[0-9]\+E[0-9]\+" -o | sed 's/>//g' | sed 's/\s*(.*)//g' | while read title
 do
-    pattern=$(echo $title | sed 's/ [^ ]\+$//g') # extract show name for grepping in tv.conf
-    test -f ~/.tv.conf && grep -i "$pattern:" ~/.tv.conf | while read line
-    do
-        title_suff=$(echo $line | cut -d':' -f2)
-        add_torrent "$title" "$title_suff"
-    done
-    test -n "$all" && add_torrent "$title" "$suff"
+    add_torrent "$title" "$suff"
 done
