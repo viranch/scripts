@@ -4,6 +4,7 @@ root="$HOME/Softwares/Arch/AUR"
 mkdir -p $root
 temp="/tmp/aurman"
 mkdir -p $temp
+alias curl='curl -s -4 --compressed'
 
 function installpkg()
 {
@@ -17,7 +18,7 @@ function installpkg()
 
     echo ":: Downloading package file for $pkg"
     cd $temp
-    curl -s --compressed https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
+    curl https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
     source $pkg/PKGBUILD
     echo ":: Installing missing dependencies"
     echo "==> Build deps: " ${makedepends[@]}
@@ -56,7 +57,7 @@ function upgradeaur()
     for pkg in `pacman -Qqm`; do
         current_ver=`pacman -Q $pkg | cut -d' ' -f2`
         epoch=""
-        curl -s --compressed https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
+        curl https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
         source $pkg/PKGBUILD
         new_ver="$pkgver-$pkgrel"
         test -n "$epoch" && new_ver="$epoch:$new_ver"
@@ -73,7 +74,7 @@ function removepkg()
 
     echo ":: Getting dependency list"
     cd $temp
-    curl -s --compressed https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
+    curl https://aur.archlinux.org/packages/`echo $pkg|cut -c1-2`/$pkg/$pkg.tar.gz | tar zx
     source $pkg/PKGBUILD
 
     echo ":: Removing dependencies"
