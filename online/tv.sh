@@ -46,7 +46,7 @@ function search() {
     #cookie_file="/tmp/surecook"
     #rm -f $cookie_file
     #while [[ ! -f $cookie_file ]]; do curl -s -XHEAD https://www.suresome.com/ -c $cookie_file > /dev/null; done
-    #curl -s --compressed https://www.suresome.com/proxy/nph-secure/00A/http/torrentz.in/feed%3fq%3d"$@" -b $cookie_file | grep "<link>.*$" -o | head -n2 | grep -v "search?q=" | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g'
+    #curl -s --compressed https://www.suresome.com/proxy/nph-secure/00A/https/torrentz.in/feed%3fq%3d"$@" -b $cookie_file | grep "<link>.*$" -o | head -n2 | grep -v "search?q=" | sed 's/<link>http:\/\/torrentz\.in\///g' | sed 's/<\/link>//g'
 }
 
 
