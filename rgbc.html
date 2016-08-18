@@ -1,12 +1,9 @@
 <html>
   <head>
     <title>Cost calculator</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap.js"></script>
-    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <script src="http://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <link href="http://www.eyecon.ro/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script>
       var rate = 140;
       var points_table = {
@@ -64,13 +61,7 @@
       };
 
       $(document).ready(function() {
-          $('.datepicker').datepicker({
-              format: 'dd/mm/yyyy'
-          }).on('changeDate', function() {
-              $(this).datepicker('hide');
-          });
           $('#input_form').submit(calculate).submit();
-          $('#calculate_btn').click(function() { $('#input_form').submit() });
           $('input[type="radio"]').click(deferred_calculate);
       });
 
@@ -104,117 +95,145 @@
     </script>
   </head>
   <body>
-    <div class="page-header">
-      <h3>Calculator</h3>
-    </div>
-    <div class="row">
-      <div class="span6">
-        <form class="form-horizontal" id="input_form">
-          <div class="control-group">
-            <label class="control-label">Season</label>
-            <div class="controls">
-              <label class="radio">
-                <input name="season" type="radio" value="blue">Blue (July 15-Sep 15)</input>
-              </label>
-              <label class="radio">
-                <input name="season" type="radio" value="white">White (Sep 15-Sep 30)</input>
-              </label>
-              <label class="radio">
-                <input name="season" type="radio" value="red" checked="checked">Red (rest of the year)</input>
-              </label>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Week</label>
-            <div class="controls">
-              <label class="radio">
-                <input name="week" type="radio" value="fullweek" checked="checked">Full week (Tue-Tue or Sat-Sat)</input>
-              </label>
-              <label class="radio">
-                <input name="week" type="radio" value="midweek">Midweek (Tue-Sat)</input>
-              </label>
-              <label class="radio">
-                <input name="week" type="radio" value="weekend">Weekend (Sat-Tue)</input>
-              </label>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Resort</label>
-            <div class="controls">
-              <label class="radio">
-                <input name="resort" type="radio" value="platinum" checked="checked">Monterio</input>
-              </label>
-              <label class="radio">
-                <input name="resort" type="radio" value="platinum">Hathi Mahal</input>
-              </label>
-              <label class="radio">
-                <input name="resort" type="radio" value="gold">Benaulim</input>
-              </label>
-              <label class="radio">
-                <input name="resort" type="radio" value="gold">Royal Palms</input>
-              </label>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Appartment</label>
-            <div class="controls">
-              <label class="radio">
-                <input name="appt" type="radio" value="t0">Studio (2 occupancy)</input>
-              </label>
-              <label class="radio">
-                <input name="appt" type="radio" value="t1" checked="checked">One bedroom (4 occupancy)</input>
-              </label>
-              <label class="radio">
-                <input name="appt" type="radio" value="t2">Two bedroom (6 occupancy)</input>
-              </label>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Margin factor</label>
-            <div class="controls">
-              <input id="margin" type="number" value="1.5" step="0.01">
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <button class="btn btn-primary" id="calculate_btn" type="button">Calculate</button>
-            </div>
-          </div>
-        </form>
+    <div class="container-fluid">
+      <div class="page-header">
+        <h3>Calculator</h3>
       </div>
-      <div class="span6">
-        <form class="form-horizontal">
-          <div class="control-group">
-            <label class="control-label">Points</label>
-            <div class="controls">
-              <input disabled="true" id="points" type="text">
+      <div class="row">
+        <div class="col-md-6">
+          <form class="form-horizontal" id="input_form">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Season</label>
+              <div class="col-md-9">
+                <div class="radio">
+                  <label>
+                    <input name="season" type="radio" value="blue">Blue (July 15-Sep 15)</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="season" type="radio" value="white">White (Sep 15-Sep 30)</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="season" type="radio" value="red" checked="checked">Red (rest of the year)</input>
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Cost</label>
-            <div class="controls">
-              <input disabled="true" id="cost" type="text">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Week</label>
+              <div class="col-md-9">
+                <div class="radio">
+                  <label>
+                    <input name="week" type="radio" value="fullweek" checked="checked">Full week (Tue-Tue or Sat-Sat)</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="week" type="radio" value="midweek">Midweek (Tue-Sat)</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="week" type="radio" value="weekend">Weekend (Sat-Tue)</input>
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Per day tariff</label>
-            <div class="controls">
-              <input disabled="true" id="per_day" type="text">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Resort</label>
+              <div class="col-md-9">
+                <div class="radio">
+                  <label>
+                    <input name="resort" type="radio" value="platinum" checked="checked">Monterio</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="resort" type="radio" value="platinum">Hathi Mahal</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="resort" type="radio" value="gold">Benaulim</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="resort" type="radio" value="gold">Royal Palms</input>
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Per person</label>
-            <div class="controls">
-              <input disabled="true" id="per_person" type="text">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Appartment</label>
+              <div class="col-md-9">
+                <div class="radio">
+                  <label>
+                    <input name="appt" type="radio" value="t0">Studio (2 occupancy)</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="appt" type="radio" value="t1" checked="checked">One bedroom (4 occupancy)</input>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="appt" type="radio" value="t2">Two bedroom (6 occupancy)</input>
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Per day per person</label>
-            <div class="controls">
-              <input disabled="true" id="per_day_person" type="text">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Margin factor</label>
+              <div class="col-md-3">
+                <input id="margin" type="number" value="1.5" step="0.01" class="form-control">
+              </div>
             </div>
-          </div>
-        </form>
+            <div class="form-group">
+              <div class="col-md-offset-3 col-md-9">
+                <button class="btn btn-primary" type="submit">Calculate</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Points</label>
+              <div class="col-md-3">
+                <input disabled="true" id="points" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Cost</label>
+              <div class="col-md-3">
+                <input disabled="true" id="cost" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Per day tariff</label>
+              <div class="col-md-3">
+                <input disabled="true" id="per_day" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Per person</label>
+              <div class="col-md-3">
+                <input disabled="true" id="per_person" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Per day per person</label>
+              <div class="col-md-3">
+                <input disabled="true" id="per_day_person" type="text" class="form-control">
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </body>
