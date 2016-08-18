@@ -1,0 +1,221 @@
+<html>
+  <head>
+    <title>Cost calculator</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap.js"></script>
+    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <script src="http://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <link href="http://www.eyecon.ro/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+    <script>
+      var rate = 140;
+      var points_table = {
+        fullweek: {
+          red: {
+            t0: { platinum: 132, gold: 126 },
+            t1: { platinum: 165, gold: 158 },
+            t2: { platinum: 198, gold: 189 }
+          },
+          white: {
+            t0: { platinum: 121, gold: 116 },
+            t1: { platinum: 151, gold: 144 },
+            t2: { platinum: 182, gold: 173 }
+          },
+          blue: {
+            t0: { platinum: 110, gold: 105 },
+            t1: { platinum: 138, gold: 131 },
+            t2: { platinum: 165, gold: 158 }
+          }
+        },
+        weekend: {
+          red: {
+            t0: { platinum: 79, gold: 76 },
+            t1: { platinum: 99, gold: 95 },
+            t2: { platinum: 119, gold: 113 }
+          },
+          white: {
+            t0: { platinum: 73, gold: 69 },
+            t1: { platinum: 91, gold: 87 },
+            t2: { platinum: 109, gold: 104 }
+          },
+          blue: {
+            t0: { platinum: 66, gold: 63 },
+            t1: { platinum: 83, gold: 79 },
+            t2: { platinum: 99, gold: 95 }
+          }
+        },
+        midweek: {
+          red: {
+            t0: { platinum: 66, gold: 63 },
+            t1: { platinum: 83, gold: 79 },
+            t2: { platinum: 99, gold: 95 }
+          },
+          white: {
+            t0: { platinum: 61, gold: 58 },
+            t1: { platinum: 76, gold: 72 },
+            t2: { platinum: 91, gold: 87 }
+          },
+          blue: {
+            t0: { platinum: 55, gold: 53 },
+            t1: { platinum: 69, gold: 66 },
+            t2: { platinum: 83, gold: 79 }
+          }
+        }
+      };
+
+      $(document).ready(function() {
+          $('.datepicker').datepicker({
+              format: 'dd/mm/yyyy'
+          }).on('changeDate', function() {
+              $(this).datepicker('hide');
+          });
+          $('#input_form').submit(calculate).submit();
+          $('#calculate_btn').click(function() { $('#input_form').submit() });
+          $('input[type="radio"]').click(deferred_calculate);
+      });
+
+      function val(id) {
+          return $('input[name="'+id+'"]:checked').val();
+      }
+
+      function deferred_calculate() {
+          setTimeout(calculate, 100);
+          return true;
+      }
+
+      function calculate() {
+          var points = points_table[val('week')][val('season')][val('appt')][val('resort')];
+          var cost = points * rate * $('#margin').val();
+
+          var days_table = {fullweek: 7, weekend: 3, midweek: 4};
+          var days = days_table[val('week')];
+
+          var pax_table = {t0: 2, t1: 4, t2: 6};
+          var pax = pax_table[val('appt')];
+
+          $('#points').val(points);
+          $('#cost').val(cost);
+          $('#per_day').val(cost/days);
+          $('#per_person').val(cost/pax);
+          $('#per_day_person').val(cost/days/pax);
+
+          return false;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="page-header">
+      <h3>Calculator</h3>
+    </div>
+    <div class="row">
+      <div class="span6">
+        <form class="form-horizontal" id="input_form">
+          <div class="control-group">
+            <label class="control-label">Season</label>
+            <div class="controls">
+              <label class="radio">
+                <input name="season" type="radio" value="blue">Blue (July 15-Sep 15)</input>
+              </label>
+              <label class="radio">
+                <input name="season" type="radio" value="white">White (Sep 15-Sep 30)</input>
+              </label>
+              <label class="radio">
+                <input name="season" type="radio" value="red" checked="checked">Red (rest of the year)</input>
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Week</label>
+            <div class="controls">
+              <label class="radio">
+                <input name="week" type="radio" value="fullweek" checked="checked">Full week (Tue-Tue or Sat-Sat)</input>
+              </label>
+              <label class="radio">
+                <input name="week" type="radio" value="midweek">Midweek (Tue-Sat)</input>
+              </label>
+              <label class="radio">
+                <input name="week" type="radio" value="weekend">Weekend (Sat-Tue)</input>
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Resort</label>
+            <div class="controls">
+              <label class="radio">
+                <input name="resort" type="radio" value="platinum" checked="checked">Monterio</input>
+              </label>
+              <label class="radio">
+                <input name="resort" type="radio" value="platinum">Hathi Mahal</input>
+              </label>
+              <label class="radio">
+                <input name="resort" type="radio" value="gold">Benaulim</input>
+              </label>
+              <label class="radio">
+                <input name="resort" type="radio" value="gold">Royal Palms</input>
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Appartment</label>
+            <div class="controls">
+              <label class="radio">
+                <input name="appt" type="radio" value="t0">Studio (2 occupancy)</input>
+              </label>
+              <label class="radio">
+                <input name="appt" type="radio" value="t1" checked="checked">One bedroom (4 occupancy)</input>
+              </label>
+              <label class="radio">
+                <input name="appt" type="radio" value="t2">Two bedroom (6 occupancy)</input>
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Margin factor</label>
+            <div class="controls">
+              <input id="margin" type="number" value="1.5" step="0.01">
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <button class="btn btn-primary" id="calculate_btn" type="button">Calculate</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="span6">
+        <form class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label">Points</label>
+            <div class="controls">
+              <input disabled="true" id="points" type="text">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Cost</label>
+            <div class="controls">
+              <input disabled="true" id="cost" type="text">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Per day tariff</label>
+            <div class="controls">
+              <input disabled="true" id="per_day" type="text">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Per person</label>
+            <div class="controls">
+              <input disabled="true" id="per_person" type="text">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Per day per person</label>
+            <div class="controls">
+              <input disabled="true" id="per_day_person" type="text">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
