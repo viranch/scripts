@@ -1,55 +1,37 @@
 import random
 
-class Map:
-    def __init__(self):
-        self.map_from = []
-        self.map_to = []
-    def append(self, key, value):
-        self.map_from.append(key)
-        self.map_to.append(value)
-    def value(self, key):
-        return self.map_to[self.map_from.index(key)]
-    def key(self, value):
-        return self.map_from[self.map_to.index(key)]
-    def keys(self):
-        return self.map_from
-    def values(self):
-        return self.map_to
-
 class SnakesLadders:
     def __init__(self):
-        self.ladders = Map()
-        self.ladders.append(1, 38)
-        self.ladders.append(4, 14)
-        self.ladders.append(9, 31)
-        self.ladders.append(21, 42)
-        self.ladders.append(28, 84)
-        self.ladders.append(36, 44)
-        self.ladders.append(51, 67)
-        self.ladders.append(71, 91)
-        self.ladders.append(80, 100)
+        self.ladders = {
+            1: 38,
+            4: 14,
+            9: 31,
+            21: 42,
+            28: 84,
+            36: 44,
+            51: 67,
+            71: 91,
+            80: 100,
+        }
 
-        self.snakes = Map()
-        self.snakes.append(16, 6)
-        self.snakes.append(47, 26)
-        self.snakes.append(49, 11)
-        self.snakes.append(56, 53)
-        self.snakes.append(62, 19)
-        self.snakes.append(64, 60)
-        self.snakes.append(87, 24)
-        self.snakes.append(93, 73)
-        self.snakes.append(95, 75)
-        self.snakes.append(98, 78)
+        self.snakes = {
+            16: 6,
+            47: 26,
+            49: 11,
+            56: 53,
+            62: 19,
+            64: 60,
+            87: 24,
+            93: 73,
+            95: 75,
+            98: 78,
+        }
 
     def check_ladders(self, pos):
-        final = pos
-        if pos in self.ladders.keys(): final = self.ladders.value(pos)
-        return (final, pos!=final)
+        return self.ladders.get(pos, None)
 
     def check_snakes(self, pos):
-        final = pos
-        if pos in self.snakes.keys(): final = self.snakes.value(pos)
-        return (final, pos!=final)
+        return self.snakes.get(pos, None)
 
 class World:
     def __init__(self):
@@ -84,13 +66,13 @@ class World:
             print self.names[turn], ":", self.pos[turn], "="+str(dice)+"=>", new,
 
             up = self.snl.check_ladders(new)
-            if up[1]:
-                new = up[0]
+            if up is not None:
+                new = up
                 print "=ladder=>", new
             else:
                 down = self.snl.check_snakes(new)
-                if down[1]:
-                    new = down[0]
+                if down is not None:
+                    new = down
                     print "=snake=>", new
                 else:
                     print ""
