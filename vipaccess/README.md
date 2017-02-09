@@ -11,7 +11,9 @@
 
 ## Setup
 
-```
+```bash
+git clone git://github.com/viranch/scripts.git
+cd scripts/vipaccess
 virtualenv vip
 source ./vip/bin/activate
 pip install python-vipaccess
