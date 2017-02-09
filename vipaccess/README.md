@@ -59,7 +59,8 @@ Now generate your OTPs without the proprietary Symantec software
 ```bash
 #!/bin/bash
 oathtool --totp -b $SECRET | tr -d '\n' | pbcopy
+osascript -e 'tell application "System Events"' -e 'delay 0.5' -e 'keystroke "v" using command down' -e 'end tell' &
 ```
 * `chmod a+x ~/Library/Scripts/vip.sh`
 * Set a keyboard shortcut in FastScripts for this script
-* Whenever prompted for OTP, use the shortcut and Cmd+V
+* Whenever prompted for OTP, use the shortcut and the OTP will be typed
