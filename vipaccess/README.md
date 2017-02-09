@@ -51,3 +51,15 @@ BE AWARE that this new credential expires on this date: <ISO date>
 ## Have fun
 
 Now generate your OTPs without the proprietary Symantec software
+
+## Pro tip
+
+* Install and run [FastScripts](https://red-sweater.com/fastscripts/)
+* Put the following in `~/Library/Scripts/vip.sh`, replacing `$SECRET` with your OTP secret
+```bash
+#!/bin/bash
+oathtool --totp -b $SECRET | tr -d '\n' | pbcopy
+```
+* `chmod a+x ~/Library/Scripts/vip.sh`
+* Set a keyboard shortcut in FastScripts for this script
+* Whenever prompted for OTP, use the shortcut and Cmd+V
