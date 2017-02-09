@@ -17,6 +17,7 @@ cd scripts/vipaccess
 virtualenv vip
 source ./vip/bin/activate
 pip install python-vipaccess
+deactivate
 
 sudo brew install oath-toolkit
 ```
