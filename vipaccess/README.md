@@ -34,3 +34,7 @@ BE AWARE that this new credential expires on this date: <ISO date>
 ## Have fun
 
 Now generate your OTPs without the proprietary Symantec software
+
+## Credits
+
+[Cyrozap](https://www.cyrozap.com/2014/09/29/reversing-the-symantec-vip-access-provisioning-protocol/) for reversing the protocol and writing a [free client](https://github.com/cyrozap/python-vipaccess) that I just copied to `generate.py` (with a 2 char change) in this directory.
