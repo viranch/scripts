@@ -12,7 +12,10 @@
 ## Setup
 
 ```
-sudo pip install python-vipaccess
+virtualenv vip
+source ./vip/bin/activate
+pip install python-vipaccess
+
 sudo brew install oath-toolkit
 ```
 
@@ -20,9 +23,11 @@ sudo brew install oath-toolkit
 
 * Generate a new VIP Credential ID
 ```
+→ vipaccess » source ./vip/bin/activate
 → vipaccess » python generate.py
 otpauth://totp/VIP%20Access:VSMT<RANDOM>?secret=<SECRET>&issuer=Symantec
 BE AWARE that this new credential expires on this date: <ISO date>
+→ vipaccess » deactivate
 → vipaccess »
 ```
 
@@ -33,6 +38,11 @@ BE AWARE that this new credential expires on this date: <ISO date>
 → ~ » oathtool --totp -b <SECRET>
 927899
 → ~ »
+```
+
+* (Optional) Clean up
+```
+→ vipaccess » rm -rf ./vip
 ```
 
 ## Have fun
