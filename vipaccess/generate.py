@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 #   Copyright 2014 Forest Crossman
@@ -254,15 +255,21 @@ def generate_qr_code(uri):
 def check_token(token_id, secret):
     '''Check the validity of the generated token.'''
     otp = totp(binascii.b2a_hex(secret).decode('utf-8'))
-    test_url = 'https://idprotect.vip.symantec.com/testtoken.v'
+    test_url = 'https://vip.symantec.com/otpCheck'
     token_check = requests.post(
         test_url,
-        data=dict(
-            tokenID=token_id,
-            firstOTP=otp
-            )
+        data={
+            'cr1': otp[0],
+            'cr2': otp[1],
+            'cr3': otp[2],
+            'cr4': otp[3],
+            'cr5': otp[4],
+            'cr6': otp[5],
+            'cred': token_id,
+            'continue': 'otp_check'
+            }
         )
-    if "Your credential is functioning properly and is ready for use" in token_check.text:
+    if "Your VIP Credential is working correctly" in token_check.text:
         return True
     else:
         return False
