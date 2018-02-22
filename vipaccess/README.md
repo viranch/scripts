@@ -11,6 +11,19 @@
 
 ## Setup
 
+Using docker:
+```bash
+docker pull viranch/vipaccess
+```
+
+OR Building docker image:
+```bash
+git clone git://github.com/viranch/scripts.git
+cd scripts/vipaccess
+docker build -t viranch/vipaccess .
+```
+
+OR Without docker:
 ```bash
 git clone git://github.com/viranch/scripts.git
 cd scripts/vipaccess
@@ -18,26 +31,23 @@ virtualenv vip
 source ./vip/bin/activate
 pip install python-vipaccess
 deactivate
-
-sudo brew install oath-toolkit
 ```
 
 ## Use
 
 * Generate a new VIP Credential ID
 ```
-→ vipaccess » source ./vip/bin/activate
-→ vipaccess » python generate.py
+→ ~ » docker run --rm -it viranch/vipaccess  # without docker: source ./vip/bin/activate && python generate.py && deactivate
 otpauth://totp/VIP%20Access:VSMT<RANDOM>?secret=<SECRET>&issuer=Symantec
 BE AWARE that this new credential expires on this date: <ISO date>
-→ vipaccess » deactivate
-→ vipaccess »
+→ ~ »
 ```
 
 * Register the `VSMT<RANDOM>` part as new credential ID with your organization
 * Save `<SECRET>` as your TOTP secret
 * Generate OTP (using my favourite CLI OTP client)
 ```
+→ ~ » sudo brew install oath-toolkit
 → ~ » oathtool --totp -b <SECRET>
 927899
 → ~ »
