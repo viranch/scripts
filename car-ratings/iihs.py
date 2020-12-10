@@ -9,13 +9,14 @@ search_terms = ['vw', 'honda', 'kia', 'ford', 'toyota', 'subaru', 'mini', 'mazda
 
 csv_header = ['Car', 'Year', 'Type']
 airtable = requests.Session()
+api_key = os.environ['api_key']
 
 @sleep_and_retry
 @limits(calls=5, period=1)
 def create_car(car):
     r = airtable.post(
         'https://api.airtable.com/v0/appse5VsenPUGnp2j/IIHS',
-        headers={'Authorization': f'Bearer keyoAQZgTlLmLZVnW', 'Content-Type': 'application/json'},
+        headers={'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'},
         json={'fields': car, 'typecast': True}
     )
     print(r)
