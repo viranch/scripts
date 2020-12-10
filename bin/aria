@@ -1,0 +1,9 @@
+#!/bin/bash
+
+remote=$1
+src=$2
+grep_opts=$3
+aria_opts=$4
+dest=$5
+
+ssh $remote 'find '$src' -type f ! -name \*.part -size +75M' | grep -i $grep_opts | cut -d/ -f5- | sed 's/^/https:\/\/vps.viranch.me\//g' | aria2c -i- -d $dest $aria_opts

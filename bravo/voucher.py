@@ -20,4 +20,4 @@ while target > total:
         else:
             counts[pos] = 0
 
-print zip(coins, qty), '=', max_total
+print zip(coins, qty), '=', max_total, '('+str(target-max_total), 'left)'

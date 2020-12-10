@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ~/.env/cs
+
+token=`curl -s https://bb2.creditstacks.com/user -H 'content-type: application/json' -d "{\"email\": \"$email\", \"password\": \"$password\"}" | jq -r .accessToken`
+
+curl -s https://bb2.creditstacks.com/api-v1 -d '{"query": "{me{transactions {transactionTime,type,status,amount,merchant{name}} }}"}' -H 'content-type: application/json' -H "authorization: $token" | jq -r '.data.me.transactions[] | select((.type == "TXN" or .type == "RETURN")) | select(.status == "SETTLED") | (.transactionTime|rtrimstr(" GMT+0000 (UTC)")) + "\t" + .merchant.name + "\t" + ((if .type == "RETURN" then .amount*-1 else .amount end)|tostring)' | head -100
+#curl -s https://bb2.creditstacks.com/api-v1 -d '{"query": "{me{transactions {transactionTime,type,status,amount,merchant{name}} }}"}' -H 'content-type: application/json' -H "authorization: $token" | jq -r '.data.me.transactions[] | select(.status != "PENDING") | select((.type == "TXN" or .type == "RETURN")) | (.transactionTime|rtrimstr(" GMT+0000 (UTC)")) + "\t" + .merchant.name + "\t" + ((if .type == "RETURN" then .amount*-1 else .amount end)|tostring)' | head -50
+#curl -s https://bb2.creditstacks.com/api-v1 -d '{"query": "{me{transactions {transactionTime,type,status,amount,merchant{name}} }}"}' -H 'content-type: application/json' -H "authorization: $token" | jq -r '.data.me.transactions[] | select((.type == "TXN" or .type == "RETURN") and .status == "SETTLED") | (.transactionTime|rtrimstr(" GMT+0000 (UTC)")) + "\t" + .merchant.name + "\t" + ((if .type == "RETURN" then .amount*-1 else .amount end)|tostring)' | head -50
+
+curl -Sso/dev/null -XDELETE https://bb2.creditstacks.com/user -H 'content-type: application/json' -H "authorization: $token"

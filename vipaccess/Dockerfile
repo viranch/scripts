@@ -4,7 +4,7 @@ RUN apt-get update; \
     apt-get install -y python python-pip; \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install python-vipaccess
+RUN pip install image lxml oath PyCrypto qrcode requests
 
 COPY ./generate.py /opt/generate.py
 
