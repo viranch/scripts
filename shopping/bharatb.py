@@ -1,3 +1,4 @@
+import os
 import traceback
 import requests
 import json
@@ -27,6 +28,8 @@ def login(username, password):
 
 def get_slots():
     s = _call('https://partnersapi.gethomesome.com/user/basket')
+    if sum(i['itemizedPrice'] for i in s['basketItems']) < 30:
+        return None, None
     o = s['orderFee']
     return (
         o[method].get('unavailable', {}).get('reason') != 'At Capacity' and len(o[method]['availableTimes']) > 0

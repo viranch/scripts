@@ -1,14 +1,19 @@
 #!/bin/bash
 
-min_br=$1
-min_lease=$2
-min_rent=$3
-max_rent=$4
+min_bd=$1
+min_bt=$2
+max_rent=$3
 
-start_ut=`date -d '+2 hours' +%s`
-end_ut=`date -d '+3 weeks' +%s`
+start_ut=`date -d '+1 month' +%s`
+end_ut=`date -d '+2 months' +%s`
 
 list-properties() {
+    cat >/dev/null << EOF
+Fourth & U:180
+The Courtyards at 65th Street:460
+Emme:362
+Avenue 64:sfo1244
+EOF
     cat << EOF
 The Montclaire:109
 Magnolia Square:333
@@ -29,5 +34,5 @@ EOF
 }
 
 list-properties | while IFS=: read -r name id; do
-    seq $start_ut 86400 $end_ut | parallel -P 4 bash ./get-listings.sh $id $min_br $min_lease $min_rent $max_rent \"$name\" | sort -u
+    seq $start_ut 86400 $end_ut | parallel -P 4 bash `dirname $0`/get-listings.sh $id $min_bd $min_bt $max_rent \"$name\" | sort -u
 done
