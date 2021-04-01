@@ -19,7 +19,7 @@ $HOME/.local/bin/xfinity-usage -j > /tmp/xu.json
 
 percent_usage=`jq -r '.used*100/.total | round' /tmp/xu.json`
 
-for step in 99 95 90 85 80 0; do
+for step in 99 95 90 85 80 50 25 0; do
     [[ $percent_usage -ge $step ]] || continue
     test -f ~/.cache/xfinity/$step && break
     notify $percent_usage
